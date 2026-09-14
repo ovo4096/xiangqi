@@ -65,3 +65,66 @@ Subject: silver hair in a traditional topknot, neatly trimmed silver beard and m
 Scene/backdrop: atmospheric bamboo and mountain mist softly blurred behind him, dark jade tones blending into warm parchment light. Gentle serene depth.
 Materials/textures: natural aged skin, softly woven robe, warm polished wood. No glowing effects.
 ```
+
+
+## Expressive portrait variants
+
+On 2026-09-14, six expression variants were created with the built-in `image_gen` tool in **edit** mode, one separate call per image. Each edit used the matching neutral portrait above as its sole `referenced_image_paths` edit target, after that source was inspected with `view_image`. CLI/API fallback was not used.
+
+All six square 1254 × 1254 PNG outputs were visually inspected and copied unchanged into this repository. Joy is a cheerful, character-appropriate smile; regret visibly removes the smile, lowers the gaze and furrows the brow. Faces, costumes, props, framing and background remain aligned with the original portraits for UI crossfades. The originals are preserved.
+
+The exact final prompt for each image is the shared prefix below, followed by one space and its per-image `Primary request` text.
+
+Shared prompt prefix:
+
+```text
+Use case: identity-preserve. Asset type: expressive NPC portrait variant for a Chinese Xiangqi desktop game. Input image 1 is the EDIT TARGET. Preserve the exact fictional person's identity, facial proportions, skin detail, hair, clothing, hands, held prop, background, warm lighting, color grading, camera position, square framing, head size and head location. Change ONLY facial expression. This is a matching animation frame that will crossfade against the neutral original; do not recompose or zoom. Retain the realistic painterly photographic quality. No text, logo, watermark, UI, borders or added objects. Output one square portrait.
+```
+
+### `public/characters/a-tang-joy.png`
+
+Edit target: `public/characters/a-tang.png`
+
+```text
+Primary request: A Tang has just made a clever capture and feels delighted and playfully proud. Give her bright happy eyes, gently lifted eyebrows and a lively genuine smile with a small glimpse of teeth, cheeks lifted. Recognizably joyful and excited but natural, not exaggerated, no change of pose.
+```
+
+### `public/characters/shen-yan-joy.png`
+
+Edit target: `public/characters/shen-yan.png`
+
+```text
+Primary request: Shen Yan has just won a valuable chess piece through a clever tactic and feels pleased, quietly excited and self-assured. Give him bright satisfied eyes, subtly raised eyebrows and a clear warm confident smile with slightly parted lips. Keep his refined scholarly personality. Expression clearly happier than neutral but natural, no change of pose.
+```
+
+### `public/characters/lu-yin-joy.png`
+
+Edit target: `public/characters/lu-yin.png`
+
+```text
+Primary request: Lu Yin has just completed a clever capture and feels pleased and warmly amused. Give him a broad kindly knowing smile, gently lifted cheeks, smiling crow's feet and lively satisfied eyes. Keep his dignified experienced personality; a warm quiet chuckle, not a caricature, no change of pose.
+```
+
+### `public/characters/a-tang-regret.png`
+
+Edit target: `public/characters/a-tang.png`
+
+```text
+Primary request: A Tang has just lost an important chess piece through a mistake and regrets it. Give her a clearly disappointed rueful expression: brows drawn slightly upward toward center, eyes softly downcast, lips pressed into a small unhappy pout with corners lowered. Her usual smile is completely gone. Express a natural little 'oh no' reaction, endearing and mildly frustrated, no tears or dramatic grief, no change of pose.
+```
+
+### `public/characters/shen-yan-regret.png`
+
+Edit target: `public/characters/shen-yan.png`
+
+```text
+Primary request: Shen Yan has just lost an important chess piece by overlooking a tactic and regrets it. Give him a clearly regretful, thoughtful frown: brows lightly furrowed, eyes slightly downcast, lips pressed and mouth corners lowered. His usual smile is completely gone. He looks ruefully disappointed and reconsidering his plan, restrained and refined, no anger, no tears, no change of pose.
+```
+
+### `public/characters/lu-yin-regret.png`
+
+Edit target: `public/characters/lu-yin.png`
+
+```text
+Primary request: Lu Yin has just lost an important chess piece after a rare oversight and regrets it. Give him a clearly rueful disappointed expression: brows gently knit, eyes pensively lowered, closed lips with downward corners, a quiet sigh. His usual smile is completely gone. He remains dignified and calm while visibly regretting his mistake, no tears, no dramatic grief, no change of pose.
+```

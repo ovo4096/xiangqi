@@ -25,6 +25,10 @@
 - 支持走棋记录、吃子记录、音效、认输和对局计时。
 - 不提示将军，也不强制应将。允许冒险走其他棋，**实际吃掉对方将／帅才判胜**；认输也可结束棋局。
 - 原创背景音乐「松风入弦」在首次点击或键盘操作后播放，可独立暂停、调节音量；设置在本机保存。
+- 三位棋友共有 **108 句离线角色语音**，覆盖开场、吃子、被吃、痛失大子、思考、悔棋和胜负。同类台词轮换播放，避免紧邻重复；语音可独立关闭、调节音量和重播，说话时背景音乐自动降低。
+- 点击「开始对弈」或落下第一步后，界面只显示当前棋友；「更换棋友」打开选择弹窗，确认后才开始新局。
+- 角色具有平静、喜悦、懊恼三套表情图，配合呼吸、点头、摇头和光效回应棋局。关闭语音后表情及字幕仍会变化。
+- 桌面界面随窗口高度伸缩，棋盘、当前角色和主要操作保持可见。棋谱可用滚轮或键盘浏览，不显示滚动条。
 
 棋局保存在当前窗口内存中，关闭应用或刷新页面后会重新开局。
 
@@ -35,7 +39,9 @@
 | <img src="public/characters/a-tang.png" width="200" alt="阿棠角色图" /> | <img src="public/characters/shen-yan.png" width="200" alt="沈砚角色图" /> | <img src="public/characters/lu-yin.png" width="200" alt="陆隐角色图" /> |
 | 活泼好胜，落子轻快，适合轻松切磋 | 攻守均衡，善于布局，适合日常过招 | 推演更深，落子审慎，适合认真挑战 |
 
-三张角色图使用内置 image_gen 分别生成，均为原创虚构人物。[完整生成提示词与资产说明](docs/character-art.md)。
+三张角色原图及六张喜悦／懊恼表情图使用内置 image_gen 生成、编辑，均为原创虚构人物。图像切换与轻量动画表现情绪，不含唇形同步视频。[完整生成提示词与资产说明](docs/character-art.md)。
+
+角色声音为普通话合成语音，每位角色 9 类事件、每类 4 个变体；应用只播放随包提供的 MP3，不调用在线合成服务。[声音来源、完整台词和重新生成方法](docs/voices.md)。
 
 ## 自由对弈规则
 
@@ -88,12 +94,12 @@ npm run electron:dist
 
 ## 发布新版本
 
-更新 `package.json` 与 `package-lock.json` 中的版本号，提交修改后推送对应的 `v版本号` 标签。例如发布 `1.1.2`：
+更新 `package.json` 与 `package-lock.json` 中的版本号，提交修改后推送对应的 `v版本号` 标签。例如发布 `1.2.1`：
 
 ```sh
-npm version 1.1.2
+npm version 1.2.1
 git push origin HEAD
-git push origin v1.1.2
+git push origin v1.2.1
 ```
 
 [Windows 发布工作流](https://github.com/ovo4096/xiangqi/actions/workflows/release.yml) 会校验标签与应用版本一致，运行测试，构建安装版与便携版，启动打包后的应用进行检查，并生成 `SHA256SUMS.txt`，最后创建 GitHub Release。若该标签已有 Release，工作流会保留现有发布及附件；本次构建仍可在 Actions 中下载。
@@ -110,6 +116,10 @@ git push origin v1.1.2
 - `src/game/characters.ts`：三位棋友的角色资料及内部棋力映射。
 - `public/characters/`：原创新角色图。
 - `public/music/`：离线背景音乐。
+- `public/voices/`：108 句离线角色语音和校验清单。
+- `src/audio/`：语音轮换、播放队列、音量偏好与背景音乐管理。
+- `src/scene/CharacterPortrait.tsx`：角色表情图与情绪动画。
+- `src/layout.css`：桌面窗口自适应布局。
 - `electron/`：桌面应用入口与启动检查（含角色图、音乐控制和吃将规则验证）。
 - `.github/workflows/release.yml`：Windows 构建与发布流程。
 

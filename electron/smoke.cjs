@@ -100,6 +100,84 @@ async function runSmokeTest({ app, window, distPath, url }) {
       await key('Enter');
     }
   };
+  const setRange = async (label, value) => {
+    await execute(`(() => {
+      const slider = document.querySelector('input[aria-label="' + ${JSON.stringify(label)} + '"]');
+      if (!slider) throw new Error('Missing slider: ' + ${JSON.stringify(label)});
+      Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(slider, ${JSON.stringify(String(value))});
+      slider.dispatchEvent(new Event('input', { bubbles: true }));
+      slider.dispatchEvent(new Event('change', { bubbles: true }));
+      return new Promise(resolve => setTimeout(resolve, 0));
+    })()`);
+  };
+  const checkViewport = async (phase, sizes) => {
+    const originalBounds = window.getBounds();
+    const originalSize = await execute('[innerWidth, innerHeight]');
+    report.checks.viewportFit ||= [];
+    try {
+      for (const [width, height] of sizes) {
+        window.setContentSize(width, height);
+        await waitFor(`innerWidth === ${width} && innerHeight === ${height}`);
+        const fit = await execute(`new Promise(resolve => setTimeout(() => {
+          const selectors = ['.scene', '.new-game', '.status-section', '.move-history', '.captures-section', '.match-actions', '.panel-footer', '.music-player', '.site-footer', '.portrait-stage', '.opponent-controls'];
+          const controls = selectors.flatMap(selector => {
+            const element = document.querySelector(selector);
+            if (!element) return [];
+            const r = element.getBoundingClientRect();
+            return [{ selector, x: r.x, y: r.y, width: r.width, height: r.height, bottom: r.bottom, right: r.right }];
+          });
+          resolve({ phase: ${JSON.stringify(phase)}, width: innerWidth, height: innerHeight,
+            documentWidth: document.documentElement.scrollWidth, documentHeight: document.documentElement.scrollHeight,
+            bodyWidth: document.body.scrollWidth, bodyHeight: document.body.scrollHeight, controls,
+            historyKeyboardAccessible: document.querySelector('.move-history')?.tabIndex === 0,
+            historyScrollbar: getComputedStyle(document.querySelector('.move-history')).scrollbarWidth,
+          });
+        }, 100))`);
+        report.checks.viewportFit.push(fit);
+        assert.ok(fit.documentWidth <= width + 1 && fit.bodyWidth <= width + 1, `${phase} has horizontal page overflow at ${width}x${height}`);
+        assert.ok(fit.documentHeight <= height + 1 && fit.bodyHeight <= height + 1, `${phase} has vertical page overflow at ${width}x${height}`);
+        for (const control of fit.controls) {
+          assert.ok(control.x >= -1 && control.y >= -1 && control.right <= width + 1 && control.bottom <= height + 1 && control.width > 0 && control.height > 0,
+            `${phase} control ${control.selector} is outside the viewport at ${width}x${height}: ${JSON.stringify(control)}`);
+        }
+        assert.ok(fit.controls.find(control => control.selector === '.move-history').height >= 25, `${phase} leaves no usable move history at ${width}x${height}`);
+        assert.equal(fit.historyKeyboardAccessible, true, 'Scrollable move history needs keyboard access');
+        assert.equal(fit.historyScrollbar, 'none', 'Move history should not show a scrollbar');
+      }
+    } finally {
+      window.setBounds(originalBounds);
+      // Native bounds round through the Windows display scale; allow one CSS
+      // pixel when restoring the original frame after exact test viewports.
+      await waitFor(`Math.abs(innerWidth - ${originalSize[0]}) <= 1 && Math.abs(innerHeight - ${originalSize[1]}) <= 1`);
+    }
+  };
+  const checkVoice = async (name, id) => {
+    await waitFor(`(() => {
+      const audio = document.querySelector('.character-voice');
+      return audio && audio.currentSrc.startsWith(${JSON.stringify(`${url}voices/${id}/intro-`)}) && audio.readyState >= 3 && Number.isFinite(audio.duration) && audio.currentTime > 0.05 && !audio.paused;
+    })()`);
+    const voice = await execute(`(() => {
+      const audio = document.querySelector('.character-voice');
+      const portrait = document.querySelector('.portrait-stage');
+      const image = portrait?.querySelector('img.is-visible');
+      return { name: ${JSON.stringify(name)}, src: audio.currentSrc, duration: audio.duration, time: audio.currentTime,
+        volume: audio.volume, error: audio.error?.message || '', caption: document.querySelector('.reaction-bubble p')?.textContent,
+        portraitLoaded: !!image?.complete && image.naturalWidth > 0, mood: portrait?.dataset.mood,
+        expression: portrait?.dataset.expression, characterCards: document.querySelectorAll('.character-options').length,
+        opponent: document.querySelector('.opponent-identity h3')?.textContent,
+      };
+    })()`);
+    report.checks.characterVoices ||= [];
+    report.checks.characterVoices.push(voice);
+    assert.ok(voice.src.endsWith('.mp3') && voice.duration > 0.5 && voice.duration < 30, 'Local character MP3 did not decode');
+    assert.equal(voice.error, '');
+    assert.ok(voice.caption && voice.caption.length >= 5, 'Character voice needs a matching visible caption');
+    assert.equal(voice.portraitLoaded, true, 'Active opponent portrait did not load');
+    assert.ok(voice.mood, 'Active portrait needs a game mood');
+    assert.ok(voice.expression, 'Active portrait needs an expression');
+    assert.equal(voice.characterCards, 0, 'An active match must not display all three character cards');
+    assert.equal(voice.opponent, name);
+  };
 
   try {
     await Promise.race([
@@ -140,6 +218,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.equal(report.checks.characterPortraits.selected, '与沈砚对弈');
         assert.ok(report.checks.characterPortraits.opponent.startsWith('沈砚'));
         assert.equal(report.checks.characterPortraits.avatar, `${url}characters/shen-yan.png`);
+        await checkViewport('setup', [[960, 700], [1280, 720], [1380, 900]]);
 
         const screenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
         await fs.writeFile(path.join(directory, 'electron-smoke.png'), screenshot.toPNG());
@@ -183,13 +262,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.ok(nearEnd > 78, 'Local music could not seek near its loop boundary');
         await waitFor("(() => { const audio = document.querySelector('.background-music'); return !audio.paused && !audio.ended && audio.currentTime < 2; })()", 5000);
         report.checks.musicPlayback.loopedAtEnd = true;
-        await execute(`(() => {
-          const slider = document.querySelector('input[aria-label="背景音乐音量"]');
-          Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(slider, '0.6');
-          slider.dispatchEvent(new Event('input', { bubbles: true }));
-          slider.dispatchEvent(new Event('change', { bubbles: true }));
-          return new Promise(resolve => setTimeout(resolve, 0));
-        })()`);
+        await setRange('背景音乐音量', 0.6);
         await waitFor("document.querySelector('.background-music').volume === 0.6 && document.querySelector('.music-volume').textContent === '60%'");
         await clickLabel('关闭音效');
         assert.equal(await execute("!!document.querySelector('[aria-label=\"打开音效\"]') && !document.querySelector('.background-music').paused && document.querySelector('.background-music').volume === 0.6"), true, 'Sound effects toggle must not change music playback or volume');
@@ -204,6 +277,43 @@ async function runSmokeTest({ app, window, distPath, url }) {
         await clickLabel('暂停背景音乐');
         await waitFor("document.querySelector('.background-music').paused");
         report.checks.musicControls = { volume: 0.6, display: '60%', pausePersistsAcrossBoardInteraction: true, independentSoundEffects: true, manualResume: true };
+
+        // Starting a match presents one opponent and plays their offline greeting.
+        await clickText('开始对弈');
+        await checkVoice('沈砚', 'shen-yan');
+        await checkViewport('active-npc', [[960, 700], [1280, 720], [1380, 900]]);
+        for (const [name, id] of [['阿棠', 'a-tang'], ['陆隐', 'lu-yin'], ['沈砚', 'shen-yan']]) {
+          await clickText('更换棋友');
+          await waitFor("!!document.querySelector('dialog[open][aria-label=\"更换棋友\"]')");
+          assert.equal(await execute("document.querySelectorAll('dialog[open] .character-option').length"), 3, 'Opponent picker needs all three characters');
+          await clickLabel(`与${name}对弈`);
+          await clickText('开始新对局');
+          await waitFor("!document.querySelector('dialog[open]')");
+          await checkVoice(name, id);
+        }
+        await setRange('角色语音音量', 0.45);
+        await waitFor("document.querySelector('.character-voice').volume === 0.45");
+        await clickLabel('关闭角色语音');
+        await waitFor("document.querySelector('.character-voice').paused && !!document.querySelector('[aria-label=\"打开角色语音\"]')");
+        assert.equal(await execute("document.querySelector('.background-music').paused && document.querySelector('.background-music').volume === 0.6 && !!document.querySelector('[aria-label=\"关闭音效\"]')"), true, 'Voice toggle changed music or move sound controls');
+        await clickLabel('重播角色语音');
+        await waitFor("!document.querySelector('.character-voice').paused && document.querySelector('.character-voice').currentTime > 0.05 && !!document.querySelector('[aria-label=\"关闭角色语音\"]')");
+        assert.equal(await execute("document.querySelector('.character-voice').volume"), 0.45);
+        report.checks.voiceControls = { volume: 0.45, togglePauses: true, replayResumes: true, independentMusicAndSoundEffects: true };
+        await clickLabel('重置视角');
+        await execute('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))');
+        const activeSceneRect = await execute(`(() => { const r = document.querySelector('.scene').getBoundingClientRect(); return { x: Math.floor(r.x), y: Math.floor(r.y), width: Math.floor(r.width), height: Math.floor(r.height) }; })()`);
+        const activeBoard = await page.capturePage(activeSceneRect, { stayHidden: true, stayAwake: true });
+        const activePixels = activeBoard.toBitmap();
+        let activeWoodPixels = 0;
+        for (let i = 0; i < activePixels.length; i += 4) {
+          const blue = activePixels[i], green = activePixels[i + 1], red = activePixels[i + 2];
+          if (red > 80 && red > green * 1.13 && green > blue * 1.1) activeWoodPixels++;
+        }
+        report.checks.activeWoodPixels = activeWoodPixels;
+        assert.ok(activeWoodPixels > 2000, 'Board did not repaint after changing viewport sizes');
+        const activeScreenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
+        await fs.writeFile(path.join(directory, 'electron-smoke-active.png'), activeScreenshot.toPNG());
 
         const assets = await fs.readdir(path.join(distPath, 'assets'));
         const workerAsset = assets.find(name => /^ai\.worker-[\w-]+\.js$/.test(name));
@@ -221,14 +331,80 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.ok(Number.isInteger(move.to.x) && move.to.x >= 0 && move.to.x <= 8 && Number.isInteger(move.to.y) && move.to.y >= 0 && move.to.y <= 9);
         assert.ok(!board.some(piece => piece.side === 'black' && piece.x === move.to.x && piece.y === move.to.y), 'NPC moved onto its own piece');
 
+        // A real exchange drives the character's emotions even with voices
+        // muted: red takes a horse, then the NPC's rook takes that red cannon.
+        // Verify the actual captured piece in the UI before checking its reaction.
+        await clickLabel('关闭角色语音');
+        await waitFor("document.querySelector('.character-voice').paused && !!document.querySelector('[aria-label=\"打开角色语音\"]')");
+        await clickText('重新开局');
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && !document.querySelector('dialog[open]')");
+        await moveBetween({ x: 1, y: 7 }, { x: 1, y: 0 });
+        const regretting = await execute(`({
+          moves: document.querySelector('.move-count').textContent.trim(),
+          event: document.querySelector('.reaction-bubble').dataset.event,
+          mood: document.querySelector('.portrait-stage').dataset.mood,
+          expression: document.querySelector('.portrait-stage').dataset.expression,
+          captured: [...document.querySelectorAll('.captures-section > div:first-child .captured-piece')].map(piece => piece.textContent),
+          caption: document.querySelector('.reaction-bubble p').textContent,
+          audioPaused: document.querySelector('.character-voice').paused,
+        })`);
+        report.checks.captureEmotions = { regretting };
+        assert.equal(regretting.moves, '01 步', 'Lost-piece reaction must be observable before the NPC reply');
+        assert.deepEqual(regretting.captured, ['马'], 'The exchange did not actually capture the NPC horse');
+        assert.equal(regretting.event, 'strongLost');
+        assert.equal(regretting.mood, 'regret');
+        assert.equal(regretting.expression, 'regret');
+        assert.equal(regretting.audioPaused, true, 'Muted reactions must not start speech');
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步' && document.querySelector('.status-top strong')?.textContent === '红方行棋'");
+        const celebrating = await execute(`({
+          event: document.querySelector('.reaction-bubble').dataset.event,
+          mood: document.querySelector('.portrait-stage').dataset.mood,
+          expression: document.querySelector('.portrait-stage').dataset.expression,
+          captured: [...document.querySelectorAll('.captures-section > div:nth-child(2) .captured-piece')].map(piece => piece.textContent),
+          history: document.querySelector('.move-history').textContent,
+          caption: document.querySelector('.reaction-bubble p').textContent,
+          audioPaused: document.querySelector('.character-voice').paused,
+        })`);
+        report.checks.captureEmotions.celebrating = celebrating;
+        assert.deepEqual(celebrating.captured, ['炮'], 'The NPC reply must actually capture the red cannon in this exchange');
+        assert.equal(celebrating.event, 'strongCapture');
+        assert.equal(celebrating.mood, 'happy');
+        assert.equal(celebrating.expression, 'joy');
+        assert.equal(celebrating.audioPaused, true);
+        assert.notEqual(celebrating.caption, regretting.caption, 'Capturing and losing a piece need different dialogue');
+        await clickText('悔棋');
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && document.querySelector('.reaction-bubble')?.dataset.event === 'undo'");
+        const afterUndo = await execute(`({
+          event: document.querySelector('.reaction-bubble').dataset.event,
+          mood: document.querySelector('.portrait-stage').dataset.mood,
+          expression: document.querySelector('.portrait-stage').dataset.expression,
+          audioPaused: document.querySelector('.character-voice').paused,
+          capturedCount: document.querySelectorAll('.captured-piece').length,
+          characterCards: document.querySelectorAll('.character-options').length,
+        })`);
+        report.checks.captureEmotions.afterUndo = afterUndo;
+        assert.equal(afterUndo.event, 'undo');
+        assert.equal(afterUndo.mood, 'calm');
+        assert.equal(afterUndo.expression, 'neutral');
+        assert.equal(afterUndo.audioPaused, true);
+        assert.equal(afterUndo.capturedCount, 0);
+        assert.equal(afterUndo.characterCards, 0, 'Undoing the exchange must keep the single-opponent match view');
+
         // Exercise the real game state through its public keyboard controls.
         for (const keyName of ['Escape', 'Enter', 'ArrowUp', 'Enter']) await key(keyName);
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步' && document.querySelector('.status-top strong')?.textContent === '红方行棋'");
         report.checks.npcGame = await execute("({ moves: document.querySelector('.move-count').textContent, history: document.querySelector('.move-history').textContent })");
         await clickText('悔棋');
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步'");
+        assert.equal(await execute("!!document.querySelector('.active-opponent') && !document.querySelector('.character-options')"), true, 'Undoing the first move must keep the active opponent view');
         report.checks.undo = true;
+        await clickText('更换棋友');
+        await waitFor("!!document.querySelector('dialog[open][aria-label=\"更换棋友\"]')");
         await clickText('双人对战');
+        await clickText('开始新对局');
+        await waitFor("!document.querySelector('dialog[open]') && document.querySelector('.player-seat.opponent strong')?.textContent === '黑方棋手'");
+        assert.equal(await execute("document.querySelector('.character-voice').paused && !document.querySelector('.active-opponent') && !document.querySelector('.character-options')"), true, 'Local multiplayer must not show NPC cards or continue NPC speech');
+        await checkViewport('active-local', [[960, 700]]);
         for (const keyName of ['Escape', 'Enter', 'ArrowUp', 'Enter']) await key(keyName);
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '01 步' && document.querySelector('.status-top strong')?.textContent === '黑方行棋'");
         for (const keyName of ['ArrowUp', 'ArrowUp', 'Enter', 'ArrowDown', 'Enter']) await key(keyName);
@@ -237,7 +413,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
 
         // Play the relaxed capture rule through the real UI, without changing React state.
         report.checks.captureRuleSteps = [];
-        await clickText('开始新对局');
+        await clickText('重新开局');
         await waitFor("!!document.querySelector('dialog[open]')");
         await clickText('开始新对局');
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && !document.querySelector('dialog[open]')");
@@ -298,7 +474,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.equal(window.isVisible(), false, 'Smoke test displayed a native window');
         report.success = true;
       })(),
-      new Promise((_resolve, reject) => { deadline = setTimeout(() => reject(new Error('Electron smoke test exceeded 110 seconds')), 110000); }),
+      new Promise((_resolve, reject) => { deadline = setTimeout(() => reject(new Error('Electron smoke test exceeded 155 seconds')), 155000); }),
     ]);
   } catch (error) {
     report.error = error.stack || String(error);

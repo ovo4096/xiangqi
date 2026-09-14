@@ -1,0 +1,545 @@
+{
+  "generator": "edge-tts 7.2.8",
+  "clips": [
+    {
+      "src": "./voices/a-tang/intro-1.mp3",
+      "bytes": 21888,
+      "sha256": "c3fc25dfc203770f2101b237e0bd9a40743a67fb1908a491e99e3e84549285d7"
+    },
+    {
+      "src": "./voices/a-tang/intro-2.mp3",
+      "bytes": 19872,
+      "sha256": "8baf45a6f84577512f01b7196acffe4ea1236624c4d87f53cb81b420612ce0f6"
+    },
+    {
+      "src": "./voices/a-tang/intro-3.mp3",
+      "bytes": 17712,
+      "sha256": "a585fef8eadd2ac256d8fa0dd18254549df3f355868d5bdb7c99fb37f8c4d9fd"
+    },
+    {
+      "src": "./voices/a-tang/intro-4.mp3",
+      "bytes": 20448,
+      "sha256": "85e149e529c05ed41f32f1712fe08d68f54ea728e7b18f5e4c3959ca6120d209"
+    },
+    {
+      "src": "./voices/a-tang/capture-1.mp3",
+      "bytes": 15696,
+      "sha256": "45f17ee8c2085601d56163f8aedaf328d23506a63a6af92f07228f5e4d6a40b1"
+    },
+    {
+      "src": "./voices/a-tang/capture-2.mp3",
+      "bytes": 18288,
+      "sha256": "aeefdabbc25a8308f99c9ad94e0231237a8907fccbc6476f19e7a63e28e8c40e"
+    },
+    {
+      "src": "./voices/a-tang/capture-3.mp3",
+      "bytes": 16416,
+      "sha256": "420be08fca6e5a3e15590207c44b01ea3d4c615153354922dc0767c7b96e3dea"
+    },
+    {
+      "src": "./voices/a-tang/capture-4.mp3",
+      "bytes": 16848,
+      "sha256": "1617f000e6587fb2422cc8e8d1d455989f75f5a0e3a5a156314513c967d623b5"
+    },
+    {
+      "src": "./voices/a-tang/lost-1.mp3",
+      "bytes": 19584,
+      "sha256": "31a47322f0108c33c4b64eda598c0d9bba2e452301d49fbf202c63983cf376e6"
+    },
+    {
+      "src": "./voices/a-tang/lost-2.mp3",
+      "bytes": 23328,
+      "sha256": "4d7391dfec7dfb7ef89255740716d1df90f3ffa01d4788c618a984984cae2671"
+    },
+    {
+      "src": "./voices/a-tang/lost-3.mp3",
+      "bytes": 18576,
+      "sha256": "fffe4f08d6b902d594c3878393a026dfc200ea186d5e608ef2b94e1a510e3029"
+    },
+    {
+      "src": "./voices/a-tang/lost-4.mp3",
+      "bytes": 21888,
+      "sha256": "3d98bb5535e91bd7f9e64b0c75606835b6a93f5fe3471bf9a5b0c6db7e1c5032"
+    },
+    {
+      "src": "./voices/a-tang/strongCapture-1.mp3",
+      "bytes": 18720,
+      "sha256": "0e8697c6aa6721a62c85fb2faa4c8029246fd47a948c7914b3ae53aad5e5f073"
+    },
+    {
+      "src": "./voices/a-tang/strongCapture-2.mp3",
+      "bytes": 20304,
+      "sha256": "fec85e314ad5a68e84753f409a0c3e50ce02d0a2901254fc4eeb554ee0d2e1d3"
+    },
+    {
+      "src": "./voices/a-tang/strongCapture-3.mp3",
+      "bytes": 17712,
+      "sha256": "959b47927035a4f19967c2b2f00d096073089b265a51072460cfaa62c21766a6"
+    },
+    {
+      "src": "./voices/a-tang/strongCapture-4.mp3",
+      "bytes": 19728,
+      "sha256": "0b8875ca6629227ec062d00bc0ec0bcc7390e1efe1d22f57a660790513d7e2aa"
+    },
+    {
+      "src": "./voices/a-tang/strongLost-1.mp3",
+      "bytes": 22464,
+      "sha256": "b2807f3bfa44e7732acaead545a62d129d70143ac511cb71a5015d13be24870d"
+    },
+    {
+      "src": "./voices/a-tang/strongLost-2.mp3",
+      "bytes": 20448,
+      "sha256": "a2b9af725bdaae3c3d614c27511c0de77efe61a59a947848a5a19e2c4c72936c"
+    },
+    {
+      "src": "./voices/a-tang/strongLost-3.mp3",
+      "bytes": 24048,
+      "sha256": "7bfebbdb9a9d664c01b61b01d208882b1387f1a89f309d34cce40f9e9ec38eff"
+    },
+    {
+      "src": "./voices/a-tang/strongLost-4.mp3",
+      "bytes": 21168,
+      "sha256": "b279f28cbe1e50662c3521c39a90eaa53499f7b82a34ca3ffb8192c2396037fc"
+    },
+    {
+      "src": "./voices/a-tang/thinking-1.mp3",
+      "bytes": 18576,
+      "sha256": "395057604a007a961663d60b849eae4e26ba966b832274ab3409ac5b0a3e5194"
+    },
+    {
+      "src": "./voices/a-tang/thinking-2.mp3",
+      "bytes": 23040,
+      "sha256": "9cffb7f1eb8b09cd1c8b07346b3cde4878d87e596b097c03643132282129d2c7"
+    },
+    {
+      "src": "./voices/a-tang/thinking-3.mp3",
+      "bytes": 18288,
+      "sha256": "e4abe701e63d60674d6ad581dc32b2dc548a45e983407f47f0aa619222cc5438"
+    },
+    {
+      "src": "./voices/a-tang/thinking-4.mp3",
+      "bytes": 19584,
+      "sha256": "e24bd57b9592fc44e78242c9d5146caf616b383a4a365f392263f9290a6be31b"
+    },
+    {
+      "src": "./voices/a-tang/win-1.mp3",
+      "bytes": 19728,
+      "sha256": "c0962fd320a363eb23cfc5ef1be44cb9f2f8b6ad728cd62f009ae44d94608acd"
+    },
+    {
+      "src": "./voices/a-tang/win-2.mp3",
+      "bytes": 19584,
+      "sha256": "4c9a468a80b18ed62e5df048dc8db2632e6043a0b57a088ab02bff4b282af2d0"
+    },
+    {
+      "src": "./voices/a-tang/win-3.mp3",
+      "bytes": 17856,
+      "sha256": "48cc6810cc38c8c2397040147d41b85ff3e1ac9e6e7d9a274c40ad95549b7a40"
+    },
+    {
+      "src": "./voices/a-tang/win-4.mp3",
+      "bytes": 18720,
+      "sha256": "4ffe7d65a64382141e69574b0b87b32c1bfd13e51e706af8eabeb8a97d346542"
+    },
+    {
+      "src": "./voices/a-tang/lose-1.mp3",
+      "bytes": 24768,
+      "sha256": "075be74dc1909b8242f437a3c08dbddeaac3a2769eaf1743e22223e19cd9440d"
+    },
+    {
+      "src": "./voices/a-tang/lose-2.mp3",
+      "bytes": 25344,
+      "sha256": "eef660ecf830a321e88a1d5a5e2b6481ce005981764bae3d650df3b2d3844dc0"
+    },
+    {
+      "src": "./voices/a-tang/lose-3.mp3",
+      "bytes": 23616,
+      "sha256": "c7bdb91e6d4a7875060795b6ffa2a59649ee939304ed3483ff9621ac8da51ac5"
+    },
+    {
+      "src": "./voices/a-tang/lose-4.mp3",
+      "bytes": 24048,
+      "sha256": "836b853ade2b254ef36e4e5c702cbe3c4cf1d2eb5bead21dcab3d357ed22fd0a"
+    },
+    {
+      "src": "./voices/a-tang/undo-1.mp3",
+      "bytes": 17136,
+      "sha256": "b1773b990a40871c8a121c383a92ec4bd59b60b513e3f4e25f5f6c90041b7830"
+    },
+    {
+      "src": "./voices/a-tang/undo-2.mp3",
+      "bytes": 19008,
+      "sha256": "9ae6d6cb285a928b8ee5ebd4b74d647d44880cc12ce55d2c000ec7812461fed1"
+    },
+    {
+      "src": "./voices/a-tang/undo-3.mp3",
+      "bytes": 19008,
+      "sha256": "b44628d849a93676281eb8fb3fdaa1837d123fbbcab6d21dba1e42ca52e5742d"
+    },
+    {
+      "src": "./voices/a-tang/undo-4.mp3",
+      "bytes": 15264,
+      "sha256": "81d10b7d1b82570e23df49ebe1546942486b0a58be4c46775cb9e78b9861b99b"
+    },
+    {
+      "src": "./voices/shen-yan/intro-1.mp3",
+      "bytes": 17136,
+      "sha256": "dac2f5188c9f3b9bb1bb081549ed302cf606c23b97aba5e19a52eaca05485042"
+    },
+    {
+      "src": "./voices/shen-yan/intro-2.mp3",
+      "bytes": 23904,
+      "sha256": "ca819a21078e4ddeda4afde0211b87c52add0508b0e1ea47abf65db642ed000c"
+    },
+    {
+      "src": "./voices/shen-yan/intro-3.mp3",
+      "bytes": 21168,
+      "sha256": "282ff84f2252ab4b25c9134de66891a3da78748028fdae0613217c55cffeb796"
+    },
+    {
+      "src": "./voices/shen-yan/intro-4.mp3",
+      "bytes": 26784,
+      "sha256": "7487075c420e07051d2293d2542269e9f82a58937f652aa2cce88f9d5ab801b3"
+    },
+    {
+      "src": "./voices/shen-yan/capture-1.mp3",
+      "bytes": 18144,
+      "sha256": "a58498e190892e39dc95bb7ff40eb9a46e252e8c525abcc0af5cb0cd2f979d50"
+    },
+    {
+      "src": "./voices/shen-yan/capture-2.mp3",
+      "bytes": 17280,
+      "sha256": "3faef3b77465faa0bebb0348112992434f04798376044fc7b4cd714dd6bc6f63"
+    },
+    {
+      "src": "./voices/shen-yan/capture-3.mp3",
+      "bytes": 20016,
+      "sha256": "d2d7033d3ea89850fb484fcd477f021be0faa46ade0cee6d1fc954b849a76002"
+    },
+    {
+      "src": "./voices/shen-yan/capture-4.mp3",
+      "bytes": 12096,
+      "sha256": "14224c6373b0803dfbf63de338f186e4ceb81ec5dfc56adb65a42deaaa636474"
+    },
+    {
+      "src": "./voices/shen-yan/lost-1.mp3",
+      "bytes": 19152,
+      "sha256": "3580dcb6769443329577e2c95e8bea18304499805343e1649d9e7e6d55d516e9"
+    },
+    {
+      "src": "./voices/shen-yan/lost-2.mp3",
+      "bytes": 20304,
+      "sha256": "de5c5545171c1d09576525df28da68b2a2064f3f1a3f6ef6d435416965d3a83c"
+    },
+    {
+      "src": "./voices/shen-yan/lost-3.mp3",
+      "bytes": 20160,
+      "sha256": "2b1dae775a0f17940d34875745d6a56a2f9af0f06ae8d69e41aab7b4fb517e98"
+    },
+    {
+      "src": "./voices/shen-yan/lost-4.mp3",
+      "bytes": 19296,
+      "sha256": "b445332b598c03f0f9946eb39a7382da97450a75e6170b50e65bb7ce1c449431"
+    },
+    {
+      "src": "./voices/shen-yan/strongCapture-1.mp3",
+      "bytes": 25056,
+      "sha256": "209b4c9559a0abdfe8647e467dc976326721c3dda67d59b4cd924febd0781bd9"
+    },
+    {
+      "src": "./voices/shen-yan/strongCapture-2.mp3",
+      "bytes": 19728,
+      "sha256": "5d7ab23794a692de807ef588d54124ba33599a055fd3570e9b332e7193010234"
+    },
+    {
+      "src": "./voices/shen-yan/strongCapture-3.mp3",
+      "bytes": 19440,
+      "sha256": "be7f2431c4a1a937524bb1160401ee737895f0802ccd6ed64b52b971c8de61d9"
+    },
+    {
+      "src": "./voices/shen-yan/strongCapture-4.mp3",
+      "bytes": 18864,
+      "sha256": "285af51c1e2cf6ad2e9f76328925ce1ee4db713f1e707383f916fe91cbadd688"
+    },
+    {
+      "src": "./voices/shen-yan/strongLost-1.mp3",
+      "bytes": 25488,
+      "sha256": "e9bf4ee2aa258265ba6880ed04b621def8d86e25f98983ee1773408f96c9467c"
+    },
+    {
+      "src": "./voices/shen-yan/strongLost-2.mp3",
+      "bytes": 22896,
+      "sha256": "510da2ab90233b1f6a61b0d282744c333ac5851d205b56a5326b20177f10c1e9"
+    },
+    {
+      "src": "./voices/shen-yan/strongLost-3.mp3",
+      "bytes": 22464,
+      "sha256": "095dc1c88acbc49be6b564acaef47bd2b6f4bcad4267b1c8c90c4fcf1762fbfb"
+    },
+    {
+      "src": "./voices/shen-yan/strongLost-4.mp3",
+      "bytes": 21744,
+      "sha256": "d09d7f2f983a581a14abd94cf46fab845073b64293b0a0f02ac03185f0ea9769"
+    },
+    {
+      "src": "./voices/shen-yan/thinking-1.mp3",
+      "bytes": 14544,
+      "sha256": "6126b61464c34cf487964662c72c083f001f5bde3aec6bc8e443f653abcbc06d"
+    },
+    {
+      "src": "./voices/shen-yan/thinking-2.mp3",
+      "bytes": 24912,
+      "sha256": "f8591a4f4f59c36957a896fc1deb38f72b476ed852b344bd6576a2c24988add3"
+    },
+    {
+      "src": "./voices/shen-yan/thinking-3.mp3",
+      "bytes": 20304,
+      "sha256": "7db1fd7ff5ab2a8f2a48163db106f1aaae1d9cf8b679bb474dc81833463cabb0"
+    },
+    {
+      "src": "./voices/shen-yan/thinking-4.mp3",
+      "bytes": 21888,
+      "sha256": "cf729c9db0c904a7efc6a92877b3e0de623cc8e9362a2c2684d633e9b1a8f267"
+    },
+    {
+      "src": "./voices/shen-yan/win-1.mp3",
+      "bytes": 20880,
+      "sha256": "1bfe09d21471f9b1957cf7463ae089665723dd0055392eabda4a883157427bef"
+    },
+    {
+      "src": "./voices/shen-yan/win-2.mp3",
+      "bytes": 18288,
+      "sha256": "e0fd0d68466f216b734d2afdfa0051ee5717bc6368712e8d65e048d33345ff80"
+    },
+    {
+      "src": "./voices/shen-yan/win-3.mp3",
+      "bytes": 25488,
+      "sha256": "bc3bc8d02e218af86a67fe1fb6a1f7934aa0f54e24d2d521de28acff2bacbb0f"
+    },
+    {
+      "src": "./voices/shen-yan/win-4.mp3",
+      "bytes": 19872,
+      "sha256": "3cc9d4fd61add98680ec474087bdb7fccf6a7e2a48ea1b79eed3f00a27520e85"
+    },
+    {
+      "src": "./voices/shen-yan/lose-1.mp3",
+      "bytes": 20016,
+      "sha256": "20e7854c36fd1634e812eae4ef591b6f151d622e7df3d9c63816dbf59b623f84"
+    },
+    {
+      "src": "./voices/shen-yan/lose-2.mp3",
+      "bytes": 29664,
+      "sha256": "b9c8871413c17a39d6b92f3ffc0e0493e9606187819df075db3472c726cbd7a2"
+    },
+    {
+      "src": "./voices/shen-yan/lose-3.mp3",
+      "bytes": 19008,
+      "sha256": "7a86dc2b809f02677ca20d71e3227a74615bd93845404f2ad5810ab8d1b34c2a"
+    },
+    {
+      "src": "./voices/shen-yan/lose-4.mp3",
+      "bytes": 28656,
+      "sha256": "80b6990e2fef9ef3ad2dbb30e3bdbeb5d733299eeb7a7ed4e467a175850ea6f9"
+    },
+    {
+      "src": "./voices/shen-yan/undo-1.mp3",
+      "bytes": 19008,
+      "sha256": "c152cb404877c789692680d8451f54a02a7d29f9ca4c09d3910c3378ca9a1b1b"
+    },
+    {
+      "src": "./voices/shen-yan/undo-2.mp3",
+      "bytes": 22032,
+      "sha256": "ce3e7867abf8e6add7ca526ec7fb7489616621ef7b289d73af6dfad148e34604"
+    },
+    {
+      "src": "./voices/shen-yan/undo-3.mp3",
+      "bytes": 25200,
+      "sha256": "d960a7f87f5a253d097eaae148cda650a10710171602f6bc8c48489dea8fbc7f"
+    },
+    {
+      "src": "./voices/shen-yan/undo-4.mp3",
+      "bytes": 20304,
+      "sha256": "ccf6ea5ad3963f482c58bb923469121cb2eb509f8d5dbb73f077c726b3a6cb61"
+    },
+    {
+      "src": "./voices/lu-yin/intro-1.mp3",
+      "bytes": 28080,
+      "sha256": "e429b31f0226ce16c1433833069cedacbfb1162190f7d6b80811ea45835667eb"
+    },
+    {
+      "src": "./voices/lu-yin/intro-2.mp3",
+      "bytes": 29808,
+      "sha256": "47d3347ca81326678318cd002274a5069f2b1b7f374a1e6bc4f301f78e8ec76c"
+    },
+    {
+      "src": "./voices/lu-yin/intro-3.mp3",
+      "bytes": 22464,
+      "sha256": "4f10fe331fe862c740a86d50e8fd713a25827d4f5626b9928b2a0eb0ca999949"
+    },
+    {
+      "src": "./voices/lu-yin/intro-4.mp3",
+      "bytes": 22464,
+      "sha256": "1fd479a29d143da0efa2b9762d8d20097106f418eb80151dd066b2d130d1a057"
+    },
+    {
+      "src": "./voices/lu-yin/capture-1.mp3",
+      "bytes": 19728,
+      "sha256": "44ff4bb6727047a2e40a7d74b73e413b2d566f9693d4267039f9d7a698024a22"
+    },
+    {
+      "src": "./voices/lu-yin/capture-2.mp3",
+      "bytes": 20736,
+      "sha256": "915397e43a50f02200f058b5883b5ce5f42ed89c1c8796fd35bb5ccca62d6a56"
+    },
+    {
+      "src": "./voices/lu-yin/capture-3.mp3",
+      "bytes": 17712,
+      "sha256": "dfed6c3d5c839ddf2f528a6c37f6cc4c541c986374f651768f5c2c86643ad32a"
+    },
+    {
+      "src": "./voices/lu-yin/capture-4.mp3",
+      "bytes": 18576,
+      "sha256": "136d1927e05bc0db82eae2d43ea137d9ebf2091a6174a89df9921edd71dd3e49"
+    },
+    {
+      "src": "./voices/lu-yin/lost-1.mp3",
+      "bytes": 19584,
+      "sha256": "8a35a4fabe73800bcb4ce99736b1822d1ceb1b3022fa144bca558ae0c4198711"
+    },
+    {
+      "src": "./voices/lu-yin/lost-2.mp3",
+      "bytes": 23904,
+      "sha256": "00c7b3e1cc378094d2aa171297104868d63130767292f151033c0bcb9cb91e52"
+    },
+    {
+      "src": "./voices/lu-yin/lost-3.mp3",
+      "bytes": 20736,
+      "sha256": "2ae2df6c2e9fbe0237eb7d6929bc126a2ae26a33f8843d37e3b8b563b85e8429"
+    },
+    {
+      "src": "./voices/lu-yin/lost-4.mp3",
+      "bytes": 19008,
+      "sha256": "6d2ec3bc3f8553ad8409d8c192b4042344b1f9c86ddd09f1da2669c9412b5d36"
+    },
+    {
+      "src": "./voices/lu-yin/strongCapture-1.mp3",
+      "bytes": 24048,
+      "sha256": "57411366c7e7c265fc9e8f7f6ba5b70320be077296438edcb129a4e62a213f91"
+    },
+    {
+      "src": "./voices/lu-yin/strongCapture-2.mp3",
+      "bytes": 14688,
+      "sha256": "4e1c487e51d6f97ef9f15188f4403fb3650bdb5c8983f8bfe71172bf7d2c3de9"
+    },
+    {
+      "src": "./voices/lu-yin/strongCapture-3.mp3",
+      "bytes": 19872,
+      "sha256": "226b8b220888655027e78bb6c30f03abe1d891c96f6292e61702094c267715c3"
+    },
+    {
+      "src": "./voices/lu-yin/strongCapture-4.mp3",
+      "bytes": 21168,
+      "sha256": "fd1719b4e30a1c7d758730041be054ec4ef44a7b408062fc766691eb9cbc0eda"
+    },
+    {
+      "src": "./voices/lu-yin/strongLost-1.mp3",
+      "bytes": 25632,
+      "sha256": "97c444f505184d03c70a023854d6e9cb28013b24b716e30bfa97e5d51257023d"
+    },
+    {
+      "src": "./voices/lu-yin/strongLost-2.mp3",
+      "bytes": 27504,
+      "sha256": "d81f0b05f9161d1618107888d74825e09d9fac72999248816c583d58546770cb"
+    },
+    {
+      "src": "./voices/lu-yin/strongLost-3.mp3",
+      "bytes": 25776,
+      "sha256": "221371f5f4b7b18fb565c4da59f1217c67ad628e75e1706936cbf29f2adad289"
+    },
+    {
+      "src": "./voices/lu-yin/strongLost-4.mp3",
+      "bytes": 22176,
+      "sha256": "07433625d04f5cfff18a73d11bd717f25131725d7fe964f60e65f9bb4316b324"
+    },
+    {
+      "src": "./voices/lu-yin/thinking-1.mp3",
+      "bytes": 19008,
+      "sha256": "806f041b118014533445d7a735b478aa173941d989ee3ba14408663809419845"
+    },
+    {
+      "src": "./voices/lu-yin/thinking-2.mp3",
+      "bytes": 21744,
+      "sha256": "ba3973f7be3b02b3eabc00f59ce1cd3dd3bea03c91b41274fb6edbf84cc613ec"
+    },
+    {
+      "src": "./voices/lu-yin/thinking-3.mp3",
+      "bytes": 23184,
+      "sha256": "28d23d59ebc00ea52bb563fcc5c0af2b67d91f39c10545cd95ab7aaec370d7c9"
+    },
+    {
+      "src": "./voices/lu-yin/thinking-4.mp3",
+      "bytes": 22608,
+      "sha256": "c7ed970d3afedad982ea2aff3b625941b5e9e69a66f8ffa5233425437b9e9e80"
+    },
+    {
+      "src": "./voices/lu-yin/win-1.mp3",
+      "bytes": 28800,
+      "sha256": "2ad42d4a9ec13c5f4252dad0380d073c8d297aaba649e005f8e8cc91d02700f2"
+    },
+    {
+      "src": "./voices/lu-yin/win-2.mp3",
+      "bytes": 21168,
+      "sha256": "22381110dc3a4433545d10be46a1ab50eca4c48efefde4b4f943696269b6a4b1"
+    },
+    {
+      "src": "./voices/lu-yin/win-3.mp3",
+      "bytes": 24048,
+      "sha256": "54e38c0b7bbbd17269f1fb3afb7a58941d147e613796023a7657b55463ff60c1"
+    },
+    {
+      "src": "./voices/lu-yin/win-4.mp3",
+      "bytes": 22752,
+      "sha256": "4d0a72621b79ccc990f0f44662f46570f1234b43b459a2a02119bab65365c1d9"
+    },
+    {
+      "src": "./voices/lu-yin/lose-1.mp3",
+      "bytes": 32400,
+      "sha256": "28f3791729aa95d88afea0a87911b2b70d8e487f56d8494637c579b22b915258"
+    },
+    {
+      "src": "./voices/lu-yin/lose-2.mp3",
+      "bytes": 29664,
+      "sha256": "8a5bef6d4897dab431ae2b56ce569d171d46970454ee4f32a5cd3d0f23119f92"
+    },
+    {
+      "src": "./voices/lu-yin/lose-3.mp3",
+      "bytes": 26352,
+      "sha256": "b597e25a27e473d6e1e026ae30f2988d23ad3f0453f248979fb73bab7330eeaa"
+    },
+    {
+      "src": "./voices/lu-yin/lose-4.mp3",
+      "bytes": 26352,
+      "sha256": "ee5fae9ca4af737f2dd43303a28bced26f2f4bef747deb70d61951be586411ad"
+    },
+    {
+      "src": "./voices/lu-yin/undo-1.mp3",
+      "bytes": 18720,
+      "sha256": "bb371d375a5a335cc5d4f73cda75f6d32e9fc923c71f9cd4dd93173bd587ed0d"
+    },
+    {
+      "src": "./voices/lu-yin/undo-2.mp3",
+      "bytes": 20016,
+      "sha256": "15b80a2d1bd83a8a062b9bd82a29c88b963053b568370a079687c386d2e262ff"
+    },
+    {
+      "src": "./voices/lu-yin/undo-3.mp3",
+      "bytes": 24048,
+      "sha256": "2e8afb430bee384dc43d87412fe6e3e6eadba09164e62464ad45dfa0df3d40e7"
+    },
+    {
+      "src": "./voices/lu-yin/undo-4.mp3",
+      "bytes": 23616,
+      "sha256": "8e4f8942b48e18df470146e52211ae2cbe78f00fe48218a13525e055a1888b4d"
+    }
+  ]
+}
