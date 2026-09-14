@@ -77,6 +77,40 @@ function isAppNavigation(requestUrl) {
   return url.pathname === '/' || url.pathname === '/index.html';
 }
 
+/** A single byte range, with inclusive endpoints (RFC 9110, section 14). */
+function parseByteRange(value, size) {
+  const match = /^bytes=(\d*)-(\d*)$/i.exec(value.trim());
+  if (!match || (!match[1] && !match[2])) return null;
+  // Compare decimal ranges as integers before converting offsets to Numbers:
+  // enormous client-provided endpoints must not wrap or lose precision.
+  const length = BigInt(size);
+  if (!match[1]) {
+    const suffix = BigInt(match[2]);
+    if (suffix === 0n) return null;
+    return { start: Number(suffix >= length ? 0n : length - suffix), end: size - 1 };
+  }
+  const start = BigInt(match[1]);
+  const end = match[2] ? BigInt(match[2]) : length - 1n;
+  if (start >= length || end < start) return null;
+  return { start: Number(start), end: Number(end >= length ? length - 1n : end) };
+}
+
+async function readByteRange(filePath, start, length) {
+  const file = await fs.open(filePath, 'r');
+  try {
+    const body = Buffer.alloc(length);
+    let offset = 0;
+    while (offset < length) {
+      const { bytesRead } = await file.read(body, offset, length - offset, start + offset);
+      if (!bytesRead) throw new Error('Packaged asset ended before its declared length');
+      offset += bytesRead;
+    }
+    return body;
+  } finally {
+    await file.close();
+  }
+}
+
 async function serveAppRequest(root, request) {
   const headers = {
     'Content-Security-Policy': CONTENT_SECURITY_POLICY,
@@ -92,9 +126,30 @@ async function serveAppRequest(root, request) {
     const stat = await fs.stat(realFile);
     if (!stat.isFile()) return new Response(null, { status: 404, headers });
     headers['Content-Type'] = resolved.mime;
-    const body = request.method === 'HEAD' ? null : await fs.readFile(realFile);
+    headers['Accept-Ranges'] = 'bytes';
+    headers['Content-Length'] = String(stat.size);
+    // HEAD carries the full representation metadata and ignores Range.
+    if (request.method === 'HEAD') return new Response(null, { status: 200, headers });
+    const rangeValue = request.headers?.get?.('range') ?? request.headers?.range ?? request.headers?.Range;
+    // The HTTP specification permits ignoring Range for an empty resource.
+    if (rangeValue != null && stat.size > 0) {
+      const range = parseByteRange(rangeValue, stat.size);
+      if (!range) {
+        headers['Content-Range'] = `bytes */${stat.size}`;
+        headers['Content-Length'] = '0';
+        return new Response(null, { status: 416, headers });
+      }
+      const length = range.end - range.start + 1;
+      headers['Content-Range'] = `bytes ${range.start}-${range.end}/${stat.size}`;
+      headers['Content-Length'] = String(length);
+      const body = await readByteRange(realFile, range.start, length);
+      return new Response(body, { status: 206, headers });
+    }
+    const body = await fs.readFile(realFile);
     return new Response(body, { status: 200, headers });
   } catch {
+    delete headers['Content-Length'];
+    delete headers['Content-Range'];
     return new Response(null, { status: 404, headers });
   }
 }

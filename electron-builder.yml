@@ -3,6 +3,7 @@ productName: YiJing-Xiangqi
 copyright: Copyright © 2026 ovo4096
 asar: true
 npmRebuild: false
+electronDist: node_modules/electron/dist
 directories:
   output: release
   buildResources: build

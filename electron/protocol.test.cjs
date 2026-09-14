@@ -76,3 +76,119 @@ test('response rejects a directory junction that escapes packaged dist', async (
     await fs.rm(temporaryRoot, { recursive: true, force: true });
   }
 });
+
+function makeWavFixture() {
+  const wav = Buffer.alloc(44 + 800);
+  wav.write('RIFF', 0);
+  wav.writeUInt32LE(wav.length - 8, 4);
+  wav.write('WAVEfmt ', 8);
+  wav.writeUInt32LE(16, 16);
+  wav.writeUInt16LE(1, 20);
+  wav.writeUInt16LE(2, 22);
+  wav.writeUInt32LE(44100, 24);
+  wav.writeUInt32LE(44100 * 4, 28);
+  wav.writeUInt16LE(4, 32);
+  wav.writeUInt16LE(16, 34);
+  wav.write('data', 36);
+  wav.writeUInt32LE(wav.length - 44, 40);
+  for (let offset = 44; offset < wav.length; offset += 2) wav.writeInt16LE((offset * 79) % 32000, offset);
+  return wav;
+}
+
+test('packaged WAV, image and module GET/HEAD responses expose full asset size', async () => {
+  const temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'xiangqi-media-'));
+  try {
+    const fixtures = [
+      ['music.wav', makeWavFixture(), 'audio/wav'],
+      ['portrait.png', Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), 'image/png'],
+      ['index.js', Buffer.from('export const title = "弈境";'), 'text/javascript; charset=utf-8'],
+    ];
+    for (const [name, body, mime] of fixtures) {
+      await fs.writeFile(path.join(temporaryRoot, name), body);
+      const url = `app://xiangqi/${name}`;
+      const response = await serveAppRequest(temporaryRoot, { url, method: 'GET' });
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get('Content-Type'), mime);
+      assert.equal(response.headers.get('Content-Length'), String(body.length));
+      assert.equal(response.headers.get('Accept-Ranges'), 'bytes');
+      assert.equal(response.headers.get('Content-Range'), null);
+      assert.deepEqual(Buffer.from(await response.arrayBuffer()), body);
+
+      const head = await serveAppRequest(temporaryRoot, { url, method: 'HEAD', headers: new Headers({ Range: 'bytes=44-99' }) });
+      assert.equal(head.status, 200);
+      assert.equal(head.headers.get('Content-Type'), mime);
+      assert.equal(head.headers.get('Content-Length'), String(body.length));
+      assert.equal(head.headers.get('Accept-Ranges'), 'bytes');
+      assert.equal(head.headers.get('Content-Range'), null);
+      assert.equal(head.headers.get('Content-Security-Policy'), CONTENT_SECURITY_POLICY);
+      assert.equal(head.headers.get('X-Content-Type-Options'), 'nosniff');
+      assert.equal((await head.arrayBuffer()).byteLength, 0);
+    }
+  } finally {
+    await fs.rm(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
+test('WAV byte ranges return exact header, bounded PCM, open-ended and suffix portions', async () => {
+  const temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'xiangqi-range-'));
+  try {
+    const wav = makeWavFixture();
+    await fs.writeFile(path.join(temporaryRoot, 'music.wav'), wav);
+    const cases = [
+      ['bytes=0-43', 0, 43],
+      ['bytes=44-127', 44, 127],
+      ['bytes=44-44', 44, 44],
+      ['bytes=700-', 700, wav.length - 1],
+      ['bytes=-80', wav.length - 80, wav.length - 1],
+      ['bytes=800-999', 800, wav.length - 1],
+      ['bytes=-999999999999999999999999', 0, wav.length - 1],
+      ['bytes=800-999999999999999999999999', 800, wav.length - 1],
+      ['bytes=0-', 0, wav.length - 1],
+    ];
+    for (const [range, start, end] of cases) {
+      const response = await serveAppRequest(temporaryRoot, {
+        url: 'app://xiangqi/music.wav', method: 'GET', headers: new Headers({ Range: range }),
+      });
+      assert.equal(response.status, 206, range);
+      assert.equal(response.headers.get('Content-Type'), 'audio/wav');
+      assert.equal(response.headers.get('Accept-Ranges'), 'bytes');
+      assert.equal(response.headers.get('Content-Length'), String(end - start + 1));
+      assert.equal(response.headers.get('Content-Range'), `bytes ${start}-${end}/${wav.length}`);
+      assert.equal(response.headers.get('Content-Security-Policy'), CONTENT_SECURITY_POLICY);
+      assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
+      assert.deepEqual(Buffer.from(await response.arrayBuffer()), wav.subarray(start, end + 1), range);
+    }
+  } finally {
+    await fs.rm(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
+test('invalid or unsatisfiable byte ranges return 416 with the actual representation size', async () => {
+  const temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'xiangqi-invalid-range-'));
+  try {
+    const wav = makeWavFixture();
+    await fs.writeFile(path.join(temporaryRoot, 'music.wav'), wav);
+    for (const range of [
+      `bytes=${wav.length}-`, 'bytes=999999999999999999999999-', 'bytes=99-44',
+      'bytes=-0', 'bytes=-', 'bytes=one-two', 'bytes=0-5,20-30', 'items=0-4', '',
+    ]) {
+      const response = await serveAppRequest(temporaryRoot, {
+        url: 'app://xiangqi/music.wav', method: 'GET', headers: new Headers({ Range: range }),
+      });
+      assert.equal(response.status, 416, range);
+      assert.equal(response.headers.get('Content-Range'), `bytes */${wav.length}`);
+      assert.equal(response.headers.get('Content-Length'), '0');
+      assert.equal(response.headers.get('Accept-Ranges'), 'bytes');
+      assert.equal(response.headers.get('Content-Security-Policy'), CONTENT_SECURITY_POLICY);
+      assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
+      assert.equal((await response.arrayBuffer()).byteLength, 0);
+    }
+    const denied = await serveAppRequest(temporaryRoot, {
+      url: 'app://xiangqi/../music.wav', method: 'GET', headers: new Headers({ Range: 'bytes=0-43' }),
+    });
+    assert.equal(denied.status, 403);
+    assert.equal(denied.headers.get('Content-Range'), null);
+  } finally {
+    await fs.rm(temporaryRoot, { recursive: true, force: true });
+  }
+});

@@ -22,6 +22,8 @@ async function runSmokeTest({ app, window, distPath, url }) {
   await fs.mkdir(directory, { recursive: true });
   const report = { success: false, version: app.getVersion(), packaged: app.isPackaged, electron: process.versions.electron, startedAt: new Date().toISOString(), checks: {}, consoleErrors: [] };
   const page = window.webContents;
+  // Exercise actual playback without sending test music or move sounds to speakers.
+  page.setAudioMuted(true);
   let deadline;
   page.on('console-message', event => {
     if (event.level === 'error') report.consoleErrors.push(event.message);
@@ -42,17 +44,62 @@ async function runSmokeTest({ app, window, distPath, url }) {
   const key = async keyName => {
     await execute(`(() => {
       const scene = document.querySelector('.scene');
+      const key = ${JSON.stringify(keyName)};
+      const caption = () => document.querySelector('.keyboard-caption')?.textContent || '';
+      const previous = caption().match(/第 ([0-9]+) 列 · 第 ([0-9]+) 行/);
+      let x = previous ? Number(previous[1]) - 1 : 4;
+      let y = previous ? Number(previous[2]) - 1 : 6;
+      const previousMoves = document.querySelector('.move-count')?.textContent;
+      const previousStatus = document.querySelector('.status-section p')?.textContent;
+      if (key === 'ArrowLeft') x = Math.max(0, x - 1);
+      if (key === 'ArrowRight') x = Math.min(8, x + 1);
+      if (key === 'ArrowUp') y = Math.max(0, y - 1);
+      if (key === 'ArrowDown') y = Math.min(9, y + 1);
       scene.focus();
-      scene.dispatchEvent(new KeyboardEvent('keydown', { key: ${JSON.stringify(keyName)}, bubbles: true }));
-      return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      scene.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+      // Hidden windows may run animation frames at 1 Hz. Wait for the actual
+      // accessible game-state update instead of waiting for WebGL to repaint.
+      return new Promise((resolve, reject) => {
+        const started = Date.now();
+        const check = () => {
+          const cursorReady = key === 'Escape' ? !caption() : caption().startsWith('第 ' + (x + 1) + ' 列 · 第 ' + (y + 1) + ' 行');
+          const actionReady = key !== 'Enter' || document.querySelector('.move-count')?.textContent !== previousMoves || document.querySelector('.status-section p')?.textContent !== previousStatus;
+          if (cursorReady && actionReady) resolve(true);
+          else if (Date.now() - started > 5000) reject(new Error('Keyboard state did not settle after ' + key + ': ' + caption()));
+          else setTimeout(check, 5);
+        };
+        setTimeout(check, 0);
+      });
     })()`);
   };
   const clickText = text => execute(`(() => {
-    const button = Array.from(document.querySelectorAll('button')).find(item => item.textContent.trim() === ${JSON.stringify(text)});
+    const scope = document.querySelector('dialog[open]') || document;
+    const button = Array.from(scope.querySelectorAll('button')).find(item => item.textContent.trim() === ${JSON.stringify(text)});
     if (!button || button.disabled) throw new Error('Missing enabled button: ' + ${JSON.stringify(text)});
     button.click();
-    return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    return new Promise(resolve => setTimeout(resolve, 0));
   })()`);
+  const clickLabel = label => execute(`(() => {
+    const button = Array.from(document.querySelectorAll('button')).find(item => item.getAttribute('aria-label') === ${JSON.stringify(label)});
+    if (!button || button.disabled) throw new Error('Missing enabled button: ' + ${JSON.stringify(label)});
+    button.click();
+    return new Promise(resolve => setTimeout(resolve, 0));
+  })()`);
+  const moveBetween = async (from, to) => {
+    await key('Escape');
+    const cursor = { x: 4, y: 6 };
+    for (const target of [from, to]) {
+      while (cursor.x !== target.x) {
+        await key(cursor.x < target.x ? 'ArrowRight' : 'ArrowLeft');
+        cursor.x += cursor.x < target.x ? 1 : -1;
+      }
+      while (cursor.y !== target.y) {
+        await key(cursor.y < target.y ? 'ArrowDown' : 'ArrowUp');
+        cursor.y += cursor.y < target.y ? 1 : -1;
+      }
+      await key('Enter');
+    }
+  };
 
   try {
     await Promise.race([
@@ -78,6 +125,21 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.equal(report.checks.initialView.nodeAvailable, false, 'Renderer unexpectedly exposes Node.js');
         assert.ok(report.checks.initialView.width > 300 && report.checks.initialView.height > 300);
         assert.equal(window.isVisible(), false, 'Smoke window must remain hidden');
+        assert.equal(page.isAudioMuted(), true, 'Smoke test must not play sound to the user');
+
+        await waitFor("document.querySelectorAll('.character-portrait img').length === 3 && [...document.querySelectorAll('.character-portrait img, .npc-avatar')].every(image => image.complete && image.naturalWidth > 0)");
+        report.checks.characterPortraits = await execute(`(() => ({
+          portraits: [...document.querySelectorAll('.character-portrait img')].map(image => ({ src: image.src, width: image.naturalWidth, height: image.naturalHeight })),
+          selected: document.querySelector('.character-option[aria-pressed="true"]')?.getAttribute('aria-label'),
+          avatar: document.querySelector('.npc-avatar')?.src,
+          opponent: document.querySelector('.player-seat.opponent strong')?.textContent,
+        }))()`);
+        assert.equal(report.checks.characterPortraits.portraits.length, 3);
+        assert.equal(new Set(report.checks.characterPortraits.portraits.map(portrait => portrait.src)).size, 3, 'NPC portraits must be distinct assets');
+        assert.ok(report.checks.characterPortraits.portraits.every(portrait => portrait.src.startsWith(`${url}characters/`) && portrait.src.endsWith('.png') && portrait.width > 0 && portrait.height > 0));
+        assert.equal(report.checks.characterPortraits.selected, '与沈砚对弈');
+        assert.ok(report.checks.characterPortraits.opponent.startsWith('沈砚'));
+        assert.equal(report.checks.characterPortraits.avatar, `${url}characters/shen-yan.png`);
 
         const screenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
         await fs.writeFile(path.join(directory, 'electron-smoke.png'), screenshot.toPNG());
@@ -92,6 +154,56 @@ async function runSmokeTest({ app, window, distPath, url }) {
         }
         report.checks.renderedWoodPixels = woodPixels;
         assert.ok(woodPixels > 2000, 'The composed board image does not contain visible wood geometry');
+
+        report.checks.characterSelection = [];
+        for (const [name, filename] of [['阿棠', 'a-tang.png'], ['陆隐', 'lu-yin.png'], ['沈砚', 'shen-yan.png']]) {
+          await clickLabel(`与${name}对弈`);
+          await waitFor(`document.querySelector('.npc-avatar')?.src === ${JSON.stringify(`${url}characters/${filename}`)} && document.querySelector('.npc-avatar')?.naturalWidth > 0`);
+          const selected = await execute(`({ selected: document.querySelector('.character-option[aria-pressed="true"]')?.getAttribute('aria-label'), opponent: document.querySelector('.player-seat.opponent strong')?.textContent, count: document.querySelectorAll('.character-portrait img').length, moves: document.querySelector('.move-count')?.textContent.trim() })`);
+          assert.equal(selected.selected, `与${name}对弈`);
+          assert.ok(selected.opponent.startsWith(name));
+          assert.equal(selected.count, 3);
+          assert.equal(selected.moves, '00 步');
+          report.checks.characterSelection.push(selected);
+        }
+
+        // A real board key unlocks local music on the first interaction.
+        assert.equal(await execute("document.querySelector('.background-music').paused"), true);
+        await key('Escape');
+        await waitFor("(() => { const audio = document.querySelector('.background-music'); return audio && audio.readyState >= 3 && !audio.paused && audio.currentTime > 0.1 && !!document.querySelector('[aria-label=\"暂停背景音乐\"]'); })()");
+        await waitFor("Number.isFinite(document.querySelector('.background-music').duration)", 5000);
+        report.checks.musicPlayback = await execute("(() => { const audio = document.querySelector('.background-music'); return { src: audio.currentSrc, duration: audio.duration, loop: audio.loop, preload: audio.preload, time: audio.currentTime, volume: audio.volume, error: audio.error?.message || '' }; })()");
+        assert.equal(report.checks.musicPlayback.src, `${url}music/quiet-pavilion.wav`);
+        assert.ok(report.checks.musicPlayback.duration >= 79 && report.checks.musicPlayback.duration <= 81, 'The original 80-second music track did not decode');
+        assert.equal(report.checks.musicPlayback.loop, true);
+        assert.equal(report.checks.musicPlayback.preload, 'none');
+        assert.equal(report.checks.musicPlayback.error, '');
+        await waitFor(`document.querySelector('.background-music').currentTime > ${report.checks.musicPlayback.time + 0.2}`);
+        const nearEnd = await execute("(() => { const audio = document.querySelector('.background-music'); audio.currentTime = audio.duration - 0.25; return audio.currentTime; })()");
+        assert.ok(nearEnd > 78, 'Local music could not seek near its loop boundary');
+        await waitFor("(() => { const audio = document.querySelector('.background-music'); return !audio.paused && !audio.ended && audio.currentTime < 2; })()", 5000);
+        report.checks.musicPlayback.loopedAtEnd = true;
+        await execute(`(() => {
+          const slider = document.querySelector('input[aria-label="背景音乐音量"]');
+          Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(slider, '0.6');
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+          slider.dispatchEvent(new Event('change', { bubbles: true }));
+          return new Promise(resolve => setTimeout(resolve, 0));
+        })()`);
+        await waitFor("document.querySelector('.background-music').volume === 0.6 && document.querySelector('.music-volume').textContent === '60%'");
+        await clickLabel('关闭音效');
+        assert.equal(await execute("!!document.querySelector('[aria-label=\"打开音效\"]') && !document.querySelector('.background-music').paused && document.querySelector('.background-music').volume === 0.6"), true, 'Sound effects toggle must not change music playback or volume');
+        await clickLabel('暂停背景音乐');
+        await waitFor("document.querySelector('.background-music').paused && !!document.querySelector('[aria-label=\"播放背景音乐\"]')");
+        await key('ArrowLeft');
+        assert.equal(await execute("document.querySelector('.background-music').paused"), true, 'Board interaction restarted deliberately paused music');
+        await clickLabel('打开音效');
+        assert.equal(await execute("!!document.querySelector('[aria-label=\"关闭音效\"]') && document.querySelector('.background-music').paused && document.querySelector('.background-music').volume === 0.6"), true, 'Music and move sound controls are not independent');
+        await clickLabel('播放背景音乐');
+        await waitFor("!document.querySelector('.background-music').paused && !!document.querySelector('[aria-label=\"暂停背景音乐\"]')");
+        await clickLabel('暂停背景音乐');
+        await waitFor("document.querySelector('.background-music').paused");
+        report.checks.musicControls = { volume: 0.6, display: '60%', pausePersistsAcrossBoardInteraction: true, independentSoundEffects: true, manualResume: true };
 
         const assets = await fs.readdir(path.join(distPath, 'assets'));
         const workerAsset = assets.find(name => /^ai\.worker-[\w-]+\.js$/.test(name));
@@ -122,6 +234,37 @@ async function runSmokeTest({ app, window, distPath, url }) {
         for (const keyName of ['ArrowUp', 'ArrowUp', 'Enter', 'ArrowDown', 'Enter']) await key(keyName);
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步' && document.querySelector('.status-top strong')?.textContent === '红方行棋'");
         report.checks.localGame = await execute("({ moves: document.querySelector('.move-count').textContent, history: document.querySelector('.move-history').textContent })");
+
+        // Play the relaxed capture rule through the real UI, without changing React state.
+        report.checks.captureRuleSteps = [];
+        await clickText('开始新对局');
+        await waitFor("!!document.querySelector('dialog[open]')");
+        await clickText('开始新对局');
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && !document.querySelector('dialog[open]')");
+        report.checks.captureRuleSteps.push({ step: 'new-local-game', at: new Date().toISOString() });
+        await moveBetween({ x: 1, y: 7 }, { x: 1, y: 0 });
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '01 步'");
+        report.checks.captureRuleSteps.push({ step: 'cannon-captures-horse', at: new Date().toISOString() });
+        await moveBetween({ x: 3, y: 0 }, { x: 4, y: 1 });
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步'");
+        report.checks.captureRuleSteps.push({ step: 'advisor-exposes-general', at: new Date().toISOString() });
+        assert.equal(await execute("document.querySelector('.status-top strong')?.textContent"), '红方行棋', 'Exposing the general must not trigger a check warning');
+        assert.equal(await execute("!!document.querySelector('dialog[open]')"), false, 'Exposing the general ended the game before capture');
+        await moveBetween({ x: 4, y: 6 }, { x: 4, y: 5 });
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '03 步'");
+        report.checks.captureRuleSteps.push({ step: 'red-postpones-general-capture', at: new Date().toISOString() });
+        assert.equal(await execute("document.querySelector('.status-top strong')?.textContent"), '黑方行棋', 'Threatened side received a check warning');
+        await moveBetween({ x: 0, y: 3 }, { x: 0, y: 4 });
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '04 步'");
+        report.checks.captureRuleSteps.push({ step: 'black-ignores-general-threat', at: new Date().toISOString() });
+        assert.equal(await execute("!!document.querySelector('dialog[open]') || /将军|应将|将死|困毙/.test(document.querySelector('.status-section').textContent)"), false, 'Ignoring a threat must keep the game running without a warning');
+        await moveBetween({ x: 1, y: 0 }, { x: 4, y: 0 });
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '05 步' && !!document.querySelector('dialog.result-modal[open]')");
+        report.checks.captureRuleSteps.push({ step: 'general-captured', at: new Date().toISOString() });
+        report.checks.captureOnlyVictory = await execute("({ status: document.querySelector('.status-top strong').textContent, reason: document.querySelector('.result-modal p').textContent, moves: document.querySelector('.move-count').textContent, history: document.querySelector('.move-history').textContent })");
+        assert.equal(report.checks.captureOnlyVictory.status, '红方获胜');
+        assert.equal(report.checks.captureOnlyVictory.reason, '黑将被吃，红方获胜');
+        assert.equal(await execute("document.querySelector('.background-music').paused"), true, 'Music resumed during the match despite being paused');
 
         report.checks.audio = await execute(`(async () => {
           const context = new AudioContext();
@@ -155,7 +298,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.equal(window.isVisible(), false, 'Smoke test displayed a native window');
         report.success = true;
       })(),
-      new Promise((_resolve, reject) => { deadline = setTimeout(() => reject(new Error('Electron smoke test exceeded 55 seconds')), 55000); }),
+      new Promise((_resolve, reject) => { deadline = setTimeout(() => reject(new Error('Electron smoke test exceeded 110 seconds')), 110000); }),
     ]);
   } catch (error) {
     report.error = error.stack || String(error);

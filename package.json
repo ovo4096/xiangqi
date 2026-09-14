@@ -1,7 +1,7 @@
 {
   "name": "yijing-xiangqi",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "弈境 · 中国象棋 — 木质 3D 棋盘、人机对战与本地双人对战",
   "author": "ovo4096",
   "license": "UNLICENSED",

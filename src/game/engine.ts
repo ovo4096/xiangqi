@@ -45,7 +45,7 @@ export function initialBoard(): Piece[] {
   return board
 }
 
-/** Destinations before checking whether the move exposes its own general. */
+/** Piece movement rules. A threatened general never restricts these destinations. */
 function pseudoMoves(board: Piece[], piece: Piece, squares: Squares): Point[] {
   const moves: Point[] = []
   const add = (x: number, y: number) => {
@@ -167,7 +167,7 @@ export function applyMove(board: Piece[], pieceId: string, to: Point): Piece[] {
 export function legalMoves(board: Piece[], piece: Piece): Point[] {
   const current = board.find(p => p.id === piece.id)
   if (!current) return []
-  return pseudoMoves(board, current, makeSquares(board)).filter(to => !isInCheck(applyMove(board, current.id, to), current.side))
+  return pseudoMoves(board, current, makeSquares(board))
 }
 
 function allLegalMoves(board: Piece[], side: Side): AiMove[] {
@@ -176,22 +176,20 @@ function allLegalMoves(board: Piece[], side: Side): AiMove[] {
   for (const piece of board) {
     if (piece.side !== side) continue
     for (const to of pseudoMoves(board, piece, squares)) {
-      if (!isInCheck(applyMove(board, piece.id, to), side)) moves.push({ pieceId: piece.id, to })
+      moves.push({ pieceId: piece.id, to })
     }
   }
   return moves
 }
 
-export function getGameResult(board: Piece[], sideToMove: Side): GameResult | null {
+export function getGameResult(board: Piece[], _sideToMove: Side): GameResult | null {
   const redGeneral = board.some(p => p.side === 'red' && p.type === 'general')
   const blackGeneral = board.some(p => p.side === 'black' && p.type === 'general')
   if (!redGeneral && !blackGeneral) return { winner: null, reason: '双方主帅均不在棋盘上' }
   if (!redGeneral) return { winner: 'black', reason: '红帅被吃，黑方获胜' }
   if (!blackGeneral) return { winner: 'red', reason: '黑将被吃，红方获胜' }
-  // A side with no legal move loses in Xiangqi, even when its general is not checked.
-  for (const piece of board) if (piece.side === sideToMove && legalMoves(board, piece).length) return null
-  const loser = sideToMove === 'red' ? '红方' : '黑方'
-  return { winner: opposite(sideToMove), reason: isInCheck(board, sideToMove) ? `${loser}被将死` : `${loser}无棋可走，困毙` }
+  // This variant ends only when a general is actually captured.
+  return null
 }
 
 function positionValue(piece: Piece): number {
@@ -256,17 +254,18 @@ export function chooseAiMove(board: Piece[], side: Side, difficulty: Difficulty)
 
   const search = (position: Piece[], turn: Side, depth: number, alpha: number, beta: number, ply: number): number => {
     nodes++
+    // Resolve a capture before either the search budget or the leaf evaluation.
+    if (!position.some(p => p.type === 'general' && p.side === turn)) return -MATE + ply
+    if (!position.some(p => p.type === 'general' && p.side !== turn)) return MATE - ply
     if (nodes > settings.nodes || (nodes % 32 === 0 && now() > deadline)) {
       interrupted = true
       return evaluate(position, turn)
     }
-    if (!position.some(p => p.type === 'general' && p.side === turn)) return -MATE + ply
-    if (!position.some(p => p.type === 'general' && p.side !== turn)) return MATE - ply
-    // A short check extension prevents stopping the search with a hanging general.
+    // Inspect threats a little deeper as a strategy; every piece move stays available.
     const checked = isInCheck(position, turn)
     if (depth <= 0 && (!checked || ply >= settings.depth + 2)) return evaluate(position, turn)
     const moves = orderMoves(position, allLegalMoves(position, turn))
-    if (!moves.length) return -MATE + ply
+    if (!moves.length) return evaluate(position, turn)
     let best = -Infinity
     for (const move of moves) {
       const value = -search(applyMove(position, move.pieceId, move.to), opposite(turn), depth - 1, -beta, -alpha, ply + 1)
