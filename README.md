@@ -94,12 +94,12 @@ npm run electron:dist
 
 ## 发布新版本
 
-更新 `package.json` 与 `package-lock.json` 中的版本号，提交修改后推送对应的 `v版本号` 标签。例如发布 `1.2.1`：
+更新 `package.json` 与 `package-lock.json` 中的版本号，提交修改后推送对应的 `v版本号` 标签。例如发布 `1.2.2`：
 
 ```sh
-npm version 1.2.1
+npm version 1.2.2
 git push origin HEAD
-git push origin v1.2.1
+git push origin v1.2.2
 ```
 
 [Windows 发布工作流](https://github.com/ovo4096/xiangqi/actions/workflows/release.yml) 会校验标签与应用版本一致，运行测试，构建安装版与便携版，启动打包后的应用进行检查，并生成 `SHA256SUMS.txt`，最后创建 GitHub Release。若该标签已有 Release，工作流会保留现有发布及附件；本次构建仍可在 Actions 中下载。

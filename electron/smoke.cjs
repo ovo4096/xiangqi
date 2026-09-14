@@ -178,6 +178,33 @@ async function runSmokeTest({ app, window, distPath, url }) {
     assert.equal(voice.characterCards, 0, 'An active match must not display all three character cards');
     assert.equal(voice.opponent, name);
   };
+  const captureRenderedBoard = async label => {
+    const started = Date.now();
+    let capture, rect, woodPixels = 0, attempts = 0;
+    // Chromium's compositor can finish after rAF, especially on headless
+    // Windows software rendering following several native window resizes.
+    // Verify the composed pixels themselves, retaining the same threshold.
+    do {
+      rect = await execute(`(() => { const r = document.querySelector('.scene').getBoundingClientRect(); return { x: Math.floor(r.x), y: Math.floor(r.y), width: Math.floor(r.width), height: Math.floor(r.height) }; })()`);
+      capture = await page.capturePage(rect, { stayHidden: true, stayAwake: true });
+      const pixels = capture.toBitmap();
+      woodPixels = 0; attempts++;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const blue = pixels[i], green = pixels[i + 1], red = pixels[i + 2];
+        if (red > 80 && red > green * 1.13 && green > blue * 1.1) woodPixels++;
+      }
+      if (woodPixels > 2000) break;
+      // The board renders on demand. Request another real frame through its
+      // public view control if the hidden compositor discarded the last one.
+      await clickLabel('重置视角');
+      await execute('new Promise(resolve => setTimeout(resolve, 250))');
+    } while (Date.now() - started < 12000);
+    report.checks.boardCaptures ||= {};
+    report.checks.boardCaptures[label] = { woodPixels, attempts, elapsedMs: Date.now() - started, rect, bitmapSize: capture.getSize() };
+    await fs.writeFile(path.join(directory, `electron-board-${label}.png`), capture.toPNG());
+    assert.ok(woodPixels > 2000, `${label} board did not compose visible wood geometry within 12 seconds`);
+    return woodPixels;
+  };
 
   try {
     await Promise.race([
@@ -222,17 +249,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
 
         const screenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
         await fs.writeFile(path.join(directory, 'electron-smoke.png'), screenshot.toPNG());
-        const sceneRect = await execute(`(() => { const r = document.querySelector('.scene').getBoundingClientRect(); return { x: Math.floor(r.x), y: Math.floor(r.y), width: Math.floor(r.width), height: Math.floor(r.height) }; })()`);
-        const boardScreenshot = await page.capturePage(sceneRect, { stayHidden: true, stayAwake: true });
-        const pixels = boardScreenshot.toBitmap();
-        let woodPixels = 0;
-        for (let i = 0; i < pixels.length; i += 4) {
-          // NativeImage bitmap pixels are BGRA. Wood is visibly warm brown.
-          const blue = pixels[i], green = pixels[i + 1], red = pixels[i + 2];
-          if (red > 80 && red > green * 1.13 && green > blue * 1.1) woodPixels++;
-        }
-        report.checks.renderedWoodPixels = woodPixels;
-        assert.ok(woodPixels > 2000, 'The composed board image does not contain visible wood geometry');
+        report.checks.renderedWoodPixels = await captureRenderedBoard('initial');
 
         report.checks.characterSelection = [];
         for (const [name, filename] of [['阿棠', 'a-tang.png'], ['陆隐', 'lu-yin.png'], ['沈砚', 'shen-yan.png']]) {
@@ -302,16 +319,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         report.checks.voiceControls = { volume: 0.45, togglePauses: true, replayResumes: true, independentMusicAndSoundEffects: true };
         await clickLabel('重置视角');
         await execute('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))');
-        const activeSceneRect = await execute(`(() => { const r = document.querySelector('.scene').getBoundingClientRect(); return { x: Math.floor(r.x), y: Math.floor(r.y), width: Math.floor(r.width), height: Math.floor(r.height) }; })()`);
-        const activeBoard = await page.capturePage(activeSceneRect, { stayHidden: true, stayAwake: true });
-        const activePixels = activeBoard.toBitmap();
-        let activeWoodPixels = 0;
-        for (let i = 0; i < activePixels.length; i += 4) {
-          const blue = activePixels[i], green = activePixels[i + 1], red = activePixels[i + 2];
-          if (red > 80 && red > green * 1.13 && green > blue * 1.1) activeWoodPixels++;
-        }
-        report.checks.activeWoodPixels = activeWoodPixels;
-        assert.ok(activeWoodPixels > 2000, 'Board did not repaint after changing viewport sizes');
+        report.checks.activeWoodPixels = await captureRenderedBoard('active');
         const activeScreenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
         await fs.writeFile(path.join(directory, 'electron-smoke-active.png'), activeScreenshot.toPNG());
 
