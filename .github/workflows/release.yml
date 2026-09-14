@@ -1,0 +1,129 @@
+name: Windows release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Verify release version
+        if: github.event_name == 'push'
+        run: |
+          $appVersion = (Get-Content -Raw package.json | ConvertFrom-Json).version
+          if ($env:GITHUB_REF_NAME -cne "v$appVersion") {
+            throw "Tag $env:GITHUB_REF_NAME does not match package.json version $appVersion."
+          }
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test game rules
+        run: npm test
+
+      - name: Build installer and portable app
+        run: npm run electron:dist
+
+      - name: Smoke test packaged app
+        timeout-minutes: 3
+        run: |
+          $smokeDir = Join-Path $env:GITHUB_WORKSPACE '.local-artifacts'
+          New-Item -ItemType Directory -Force -Path $smokeDir | Out-Null
+          $env:YIJING_SMOKE_DIR = $smokeDir
+          $appPath = Join-Path $env:GITHUB_WORKSPACE 'release/win-unpacked/YiJing-Xiangqi.exe'
+          $smokeProcess = Start-Process -FilePath $appPath -ArgumentList '--smoke-test' -WindowStyle Hidden -Wait -PassThru
+          if ($smokeProcess.ExitCode -ne 0) {
+            throw "Packaged app smoke test failed with exit code $($smokeProcess.ExitCode)."
+          }
+
+      - name: Generate checksums
+        run: |
+          $releaseAssets = @(Get-ChildItem -Path 'release/*' -File -Include '*.exe', '*.blockmap' | Sort-Object Name)
+          if (($releaseAssets | Where-Object Extension -eq '.exe').Count -ne 2) {
+            throw 'Expected exactly two Windows executable release assets.'
+          }
+          $checksumLines = $releaseAssets | ForEach-Object {
+            $digest = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$digest  $($_.Name)"
+          }
+          $checksumLines | Set-Content -LiteralPath 'release/SHA256SUMS.txt' -Encoding utf8NoBOM
+
+      - name: Upload Windows packages
+        uses: actions/upload-artifact@v7
+        with:
+          name: yijing-xiangqi-windows-x64-${{ github.run_number }}
+          path: |
+            release/*.exe
+            release/*.blockmap
+            release/SHA256SUMS.txt
+          if-no-files-found: error
+          compression-level: 0
+
+      - name: Upload smoke test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: electron-smoke-${{ github.run_number }}
+          path: .local-artifacts/
+          include-hidden-files: true
+          if-no-files-found: ignore
+
+      - name: Publish GitHub Release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view $env:GITHUB_REF_NAME --json tagName 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            Write-Output "Release $env:GITHUB_REF_NAME already exists; keeping its existing assets."
+            exit 0
+          }
+          $releaseNotes = @'
+          Windows 10 / 11 x64 桌面版，支持离线人机对战和同机双人对战。
+
+          - Setup.exe：安装版。
+          - Portable.exe：无需安装，双击运行。
+          - SHA256SUMS.txt：下载文件校验值。
+
+          立体木质棋盘与棋子，三档 NPC 难度，支持悔棋、走棋记录、旋转与缩放视角。
+
+          当前安装包未进行代码签名，Windows 可能显示未知发布者提示。棋局在关闭应用后重置；双人模式为同机对弈。
+          '@
+          $notesPath = Join-Path $env:RUNNER_TEMP 'yijing-release-notes.md'
+          $releaseNotes | Set-Content -LiteralPath $notesPath -Encoding utf8NoBOM
+          $releaseAssets = @(Get-ChildItem -Path 'release/*' -File -Include '*.exe', '*.blockmap', 'SHA256SUMS.txt' | Select-Object -ExpandProperty FullName)
+          gh release create $env:GITHUB_REF_NAME @releaseAssets --verify-tag --title "弈境 · 3D 中国象棋 $env:GITHUB_REF_NAME" --notes-file $notesPath
+          if ($LASTEXITCODE -ne 0) {
+            throw 'GitHub Release publication failed.'
+          }

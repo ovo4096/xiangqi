@@ -1,0 +1,42 @@
+{
+  "name": "yijing-xiangqi",
+  "private": true,
+  "version": "1.0.0",
+  "description": "弈境 · 中国象棋 — 木质 3D 棋盘、人机对战与本地双人对战",
+  "author": "ovo4096",
+  "license": "UNLICENSED",
+  "main": "electron/main.cjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ovo4096/xiangqi.git"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "tsx --test src/game/engine.test.ts && node --test electron/*.test.cjs",
+    "electron:dev": "npm run build && electron .",
+    "electron:pack": "npm run build && electron-builder --dir --publish never",
+    "electron:dist": "npm run build && electron-builder --win nsis portable --x64 --publish never && node scripts/checksums.mjs",
+    "electron:smoke": "electron . --smoke-test"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/three": "^0.180.0",
+    "@vitejs/plugin-react": "^4.5.0",
+    "electron": "44.3.0",
+    "electron-builder": "26.15.3",
+    "tsx": "^4.20.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  }
+}

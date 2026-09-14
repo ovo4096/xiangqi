@@ -1,0 +1,12 @@
+node_modules/
+dist/
+release/
+.local-artifacts/
+.local-tools/
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.log
+.DS_Store

@@ -1,0 +1,38 @@
+appId: com.ovo4096.xiangqi
+productName: YiJing-Xiangqi
+copyright: Copyright © 2026 ovo4096
+asar: true
+npmRebuild: false
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**/*
+  - electron/**/*
+  - build/icon.png
+  - package.json
+  - '!electron/**/*.test.cjs'
+  - '!node_modules/**/*'
+win:
+  executableName: YiJing-Xiangqi
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+nsis:
+  artifactName: YiJing-Xiangqi-${version}-${arch}-Setup.${ext}
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 弈境 · 中国象棋
+  uninstallDisplayName: 弈境 · 中国象棋
+  runAfterFinish: false
+  deleteAppDataOnUninstall: false
+portable:
+  artifactName: YiJing-Xiangqi-${version}-${arch}-Portable.${ext}
+publish: null
