@@ -119,7 +119,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         window.setContentSize(width, height);
         await waitFor(`innerWidth === ${width} && innerHeight === ${height}`);
         const fit = await execute(`new Promise(resolve => setTimeout(() => {
-          const selectors = ['.scene', '.new-game', '.status-section', '.move-history', '.captures-section', '.match-actions', '.panel-footer', '.music-player', '.site-footer', '.portrait-stage', '.opponent-controls'];
+          const selectors = ['.scene', '.new-game', '.status-section', '.move-history', '.captures-section', '.match-actions', '.panel-footer', '.music-player', '.site-footer', '.portrait-stage', '.opponent-controls', '.character-options', '.character-option[data-character="wen-yi"]'];
           const controls = selectors.flatMap(selector => {
             const element = document.querySelector(selector);
             if (!element) return [];
@@ -175,7 +175,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
     assert.equal(voice.portraitLoaded, true, 'Active opponent portrait did not load');
     assert.ok(voice.mood, 'Active portrait needs a game mood');
     assert.ok(voice.expression, 'Active portrait needs an expression');
-    assert.equal(voice.characterCards, 0, 'An active match must not display all three character cards');
+    assert.equal(voice.characterCards, 0, 'An active match must not display all character cards');
     assert.equal(voice.opponent, name);
   };
   const captureRenderedBoard = async label => {
@@ -232,33 +232,33 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.equal(window.isVisible(), false, 'Smoke window must remain hidden');
         assert.equal(page.isAudioMuted(), true, 'Smoke test must not play sound to the user');
 
-        await waitFor("document.querySelectorAll('.character-portrait img').length === 3 && [...document.querySelectorAll('.character-portrait img, .npc-avatar')].every(image => image.complete && image.naturalWidth > 0)");
+        await waitFor("document.querySelectorAll('.character-portrait img').length === 4 && [...document.querySelectorAll('.character-portrait img, .npc-avatar')].every(image => image.complete && image.naturalWidth > 0)");
         report.checks.characterPortraits = await execute(`(() => ({
           portraits: [...document.querySelectorAll('.character-portrait img')].map(image => ({ src: image.src, width: image.naturalWidth, height: image.naturalHeight })),
           selected: document.querySelector('.character-option[aria-pressed="true"]')?.getAttribute('aria-label'),
           avatar: document.querySelector('.npc-avatar')?.src,
           opponent: document.querySelector('.player-seat.opponent strong')?.textContent,
         }))()`);
-        assert.equal(report.checks.characterPortraits.portraits.length, 3);
-        assert.equal(new Set(report.checks.characterPortraits.portraits.map(portrait => portrait.src)).size, 3, 'NPC portraits must be distinct assets');
+        assert.equal(report.checks.characterPortraits.portraits.length, 4);
+        assert.equal(new Set(report.checks.characterPortraits.portraits.map(portrait => portrait.src)).size, 4, 'NPC portraits must be distinct assets');
         assert.ok(report.checks.characterPortraits.portraits.every(portrait => portrait.src.startsWith(`${url}characters/`) && portrait.src.endsWith('.png') && portrait.width > 0 && portrait.height > 0));
         assert.equal(report.checks.characterPortraits.selected, '与沈砚对弈');
         assert.ok(report.checks.characterPortraits.opponent.startsWith('沈砚'));
         assert.equal(report.checks.characterPortraits.avatar, `${url}characters/shen-yan.png`);
         await checkViewport('setup', [[960, 700], [1280, 720], [1380, 900]]);
 
+        report.checks.renderedWoodPixels = await captureRenderedBoard('initial');
         const screenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
         await fs.writeFile(path.join(directory, 'electron-smoke.png'), screenshot.toPNG());
-        report.checks.renderedWoodPixels = await captureRenderedBoard('initial');
 
         report.checks.characterSelection = [];
-        for (const [name, filename] of [['阿棠', 'a-tang.png'], ['陆隐', 'lu-yin.png'], ['沈砚', 'shen-yan.png']]) {
+        for (const [name, filename] of [['阿棠', 'a-tang.png'], ['陆隐', 'lu-yin.png'], ['闻弈', 'wen-yi.png'], ['沈砚', 'shen-yan.png']]) {
           await clickLabel(`与${name}对弈`);
           await waitFor(`document.querySelector('.npc-avatar')?.src === ${JSON.stringify(`${url}characters/${filename}`)} && document.querySelector('.npc-avatar')?.naturalWidth > 0`);
           const selected = await execute(`({ selected: document.querySelector('.character-option[aria-pressed="true"]')?.getAttribute('aria-label'), opponent: document.querySelector('.player-seat.opponent strong')?.textContent, count: document.querySelectorAll('.character-portrait img').length, moves: document.querySelector('.move-count')?.textContent.trim() })`);
           assert.equal(selected.selected, `与${name}对弈`);
           assert.ok(selected.opponent.startsWith(name));
-          assert.equal(selected.count, 3);
+          assert.equal(selected.count, 4);
           assert.equal(selected.moves, '00 步');
           report.checks.characterSelection.push(selected);
         }
@@ -299,14 +299,56 @@ async function runSmokeTest({ app, window, distPath, url }) {
         await clickText('开始对弈');
         await checkVoice('沈砚', 'shen-yan');
         await checkViewport('active-npc', [[960, 700], [1280, 720], [1380, 900]]);
-        for (const [name, id] of [['阿棠', 'a-tang'], ['陆隐', 'lu-yin'], ['沈砚', 'shen-yan']]) {
+        for (const [name, id] of [['阿棠', 'a-tang'], ['陆隐', 'lu-yin'], ['闻弈', 'wen-yi'], ['沈砚', 'shen-yan']]) {
           await clickText('更换棋友');
           await waitFor("!!document.querySelector('dialog[open][aria-label=\"更换棋友\"]')");
-          assert.equal(await execute("document.querySelectorAll('dialog[open] .character-option').length"), 3, 'Opponent picker needs all three characters');
+          assert.equal(await execute("document.querySelectorAll('dialog[open] .character-option').length"), 4, 'Opponent picker needs all four characters');
           await clickLabel(`与${name}对弈`);
           await clickText('开始新对局');
           await waitFor("!document.querySelector('dialog[open]')");
           await checkVoice(name, id);
+          if (id === 'wen-yi') {
+            await waitFor("[...document.querySelectorAll('.portrait-layer')].every(image => image.complete && image.naturalWidth > 0)");
+            await checkViewport('active-master', [[960, 700]]);
+            // Play the stronger opponent through the same board input as a user.
+            // Undo must cancel its longer-running worker before a stale reply lands.
+            await moveBetween({ x: 0, y: 6 }, { x: 0, y: 5 });
+            await waitFor("document.querySelector('.status-top strong')?.textContent === '闻弈思考中'");
+            await execute('new Promise(resolve => setTimeout(resolve, 650))');
+            await clickText('悔棋');
+            await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && document.querySelector('.status-top strong')?.textContent === '红方行棋'");
+            await execute('new Promise(resolve => setTimeout(resolve, 4000))');
+            assert.equal(await execute("document.querySelector('.move-count').textContent.trim()"), '00 步', 'Cancelled master search posted a stale move after undo');
+            const started = Date.now();
+            await moveBetween({ x: 0, y: 6 }, { x: 0, y: 5 });
+            await waitFor("document.querySelector('.status-top strong')?.textContent === '闻弈思考中'");
+            await clickLabel('俯视视角');
+            assert.equal(await execute("document.querySelector('[aria-label=\"俯视视角\"]').getAttribute('aria-pressed')"), 'true', 'Board controls did not respond during master search');
+            await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步' && document.querySelector('.status-top strong')?.textContent === '红方行棋'");
+            report.checks.masterGame = await execute(`({ moves: document.querySelector('.move-count').textContent.trim(), history: document.querySelector('.move-history').textContent, opponent: document.querySelector('.opponent-identity h3').textContent, portraits: [...document.querySelectorAll('.portrait-layer')].map(image => image.src), characterCards: document.querySelectorAll('.character-options').length })`);
+            report.checks.masterGame.elapsedMs = Date.now() - started;
+            report.checks.masterGame.cancelledSearchStayedCancelled = true;
+            report.checks.masterGame.controlsResponsiveDuringSearch = true;
+            assert.equal(report.checks.masterGame.opponent, '闻弈');
+            assert.equal(report.checks.masterGame.characterCards, 0);
+            await execute('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))');
+            await captureRenderedBoard('master');
+            const masterScreenshot = await page.capturePage({ x: 0, y: 0, width: window.getContentSize()[0], height: window.getContentSize()[1] }, { stayHidden: true, stayAwake: true });
+            await fs.writeFile(path.join(directory, 'electron-smoke-master.png'), masterScreenshot.toPNG());
+            await clickText('悔棋');
+            await waitFor("document.querySelector('.move-count').textContent.trim() === '00 步'");
+            await moveBetween({ x: 0, y: 6 }, { x: 0, y: 5 });
+            await waitFor("document.querySelector('.status-top strong')?.textContent === '闻弈思考中'");
+            await execute('new Promise(resolve => setTimeout(resolve, 650))');
+            await clickText('更换棋友');
+            await waitFor("!!document.querySelector('dialog[open][aria-label=\"更换棋友\"]')");
+            await clickLabel('与沈砚对弈');
+            await clickText('开始新对局');
+            await waitFor("document.querySelector('.opponent-identity h3')?.textContent === '沈砚' && !document.querySelector('dialog[open]')");
+            await execute('new Promise(resolve => setTimeout(resolve, 4000))');
+            assert.equal(await execute("document.querySelector('.move-count').textContent.trim()"), '00 步', 'Old master worker moved in the newly selected opponent game');
+            report.checks.masterGame.switchOpponentCancelsSearch = true;
+          }
         }
         await setRange('角色语音音量', 0.45);
         await waitFor("document.querySelector('.character-voice').volume === 0.45");

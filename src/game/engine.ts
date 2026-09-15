@@ -1,3 +1,5 @@
+import { searchMaster } from './master'
+
 /** Pure Xiangqi rules. Coordinates are viewed from red's side of the board. */
 export type Side = 'red' | 'black'
 export type PieceType = 'general' | 'advisor' | 'elephant' | 'horse' | 'rook' | 'cannon' | 'pawn'
@@ -5,7 +7,7 @@ export type Point = { x: number; y: number }
 export interface Piece extends Point { id: string; type: PieceType; side: Side }
 export interface Move { pieceId: string; from: Point; to: Point; captured?: Piece }
 export type AiMove = { pieceId: string; to: Point }
-export type Difficulty = 'easy' | 'medium' | 'hard'
+export type Difficulty = 'easy' | 'medium' | 'hard' | 'master'
 export type GameResult = { winner: Side | null; reason: string }
 
 const WIDTH = 9
@@ -233,18 +235,23 @@ function orderMoves(board: Piece[], moves: AiMove[], preferred?: AiMove): AiMove
 }
 
 /** Bounded iterative deepening keeps the NPC responsive on phones and laptops. */
-export function chooseAiMove(board: Piece[], side: Side, difficulty: Difficulty): AiMove | null {
+export function chooseAiMove(board: Piece[], side: Side, difficulty: Difficulty,
+  legacyBudget?: { depth?: number; milliseconds?: number; nodes?: number }): AiMove | null {
+  if (difficulty === 'master') return searchMaster(board, side).move
   if (!board.some(p => p.type === 'general' && p.side === side)
     || !board.some(p => p.type === 'general' && p.side !== side)) return null
   const candidates = orderMoves(board, allLegalMoves(board, side))
   if (!candidates.length) return null
   if (candidates.length === 1) return candidates[0]
 
-  const settings = {
+  const defaults = {
     easy: { depth: 1, milliseconds: 100, nodes: 2_000 },
     medium: { depth: 2, milliseconds: 300, nodes: 8_000 },
     hard: { depth: 4, milliseconds: 800, nodes: 24_000 },
   }[difficulty]
+  // The optional override exists for reproducible equal-budget engine comparisons.
+  // The application never supplies it, so the original three levels stay unchanged.
+  const settings = { ...defaults, ...legacyBudget }
   const now = () => typeof performance !== 'undefined' ? performance.now() : Date.now()
   const deadline = now() + settings.milliseconds
   let nodes = 0

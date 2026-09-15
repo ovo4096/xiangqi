@@ -1,0 +1,5394 @@
+{
+  "metadata": {
+    "date": "2026-09-15T06:23:48.133Z",
+    "platform": "win32",
+    "architecture": "x64",
+    "node": "v24.16.0",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "masterSha256": "93222ab4c78eded3aca08029ae3bf322b3be39e8607bb82f529e94b935369403",
+    "legacySha256": "7ce7a8f119a2a8c604fc6b02722fd3c5cc3f733eecb0c647a38e535a301c7430"
+  },
+  "configuration": {
+    "games": 4,
+    "milliseconds": 400,
+    "maxPlies": 120,
+    "equalBudget": true
+  },
+  "results": [
+    {
+      "game": 1,
+      "opening": "initial",
+      "masterSide": "red",
+      "winner": null,
+      "reason": "ply-limit",
+      "plies": 120,
+      "materialDifference": 730,
+      "masterMs": 24050,
+      "legacyMs": 24013,
+      "masterNodes": 7995689,
+      "masterMeanDepth": 6.58,
+      "moves": [
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮八平三",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 25,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮8进4",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮三进四",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 116,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮8平5",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马八进七",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "depth": 6,
+          "score": 119,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "马8进9",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮三平七",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 232,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车9平8",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮二平三",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 247,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮5平6",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮七平一",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 8,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 234,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮2平5",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "相三进五",
+          "move": {
+            "pieceId": "red-elephant-6",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "depth": 6,
+          "score": 274,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮6进1",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七进一",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 2,
+              "y": 5
+            }
+          },
+          "depth": 5,
+          "score": 329,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮6平3",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮三平七",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "depth": 6,
+          "score": 338,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮5平3",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮七进五",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 358,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "马2进3",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七进一",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 2,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 362,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8进4",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七进一",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 398,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七进一",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 395,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8平9",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 8,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵三进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 6,
+              "y": 5
+            }
+          },
+          "depth": 7,
+          "score": 377,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒5进1",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马二进四",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "depth": 6,
+          "score": 372,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒5进1",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 5
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马四进三",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 6,
+              "y": 6
+            }
+          },
+          "depth": 6,
+          "score": 402,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒5平6",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 5,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵三进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 344,
+          "elapsedMs": 403
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象3进5",
+          "move": {
+            "pieceId": "black-elephant-2",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵三平四",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 5,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 363,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒6进1",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马三进二",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 7,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 348,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车9平3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马二进一",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 337,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象7进9",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七平六",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 266,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车1进2",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 0,
+              "y": 2
+            }
+          },
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵六平五",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 264,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车1平5",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车一平二",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 7,
+              "y": 9
+            }
+          },
+          "depth": 5,
+          "score": 267,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3进1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵四进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 5,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 157,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车二进六",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 7,
+              "y": 3
+            }
+          },
+          "depth": 7,
+          "score": 165,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3进5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵四平五",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 4,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 320,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵五进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 332,
+          "elapsedMs": 403
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3平8",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 3
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车九进一",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 0,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 306,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒6平5",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵五平六",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 277,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8平4",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 3,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵六平七",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 280,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车4平3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七平八",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 1,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 280,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3平2",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 1,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵八平七",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 297,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车2平3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵七平八",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 1,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 250,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3平2",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 1,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵八平九",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 0,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 281,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车2进6",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车九平七",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 332,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车2退3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 1,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车七进六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 337,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车2平1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 0,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车七平五",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 8,
+          "score": 385,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "士4进5",
+          "move": {
+            "pieceId": "black-advisor-3",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵一进一",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 8,
+              "y": 5
+            }
+          },
+          "depth": 7,
+          "score": 276,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象9进7",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五退二",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 8,
+          "score": 294,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象7退9",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵一进一",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 8,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 289,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车1平3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵一进一",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 8,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 309,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒1进1",
+          "move": {
+            "pieceId": "black-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五平九",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 440,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象9退7",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 6,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车九平五",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 443,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒5平6",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵一平二",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 7,
+              "y": 3
+            }
+          },
+          "depth": 6,
+          "score": 435,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五平二",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 7,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 428,
+          "elapsedMs": 403
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒6平5",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵二进一",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 7,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 428,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3进5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵二进一",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 7,
+              "y": 1
+            }
+          },
+          "depth": 6,
+          "score": 450,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车二平五",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 500,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵二平三",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 6,
+              "y": 1
+            }
+          },
+          "depth": 7,
+          "score": 503,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象7进9",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵三平四",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 5,
+              "y": 1
+            }
+          },
+          "depth": 7,
+          "score": 517,
+          "elapsedMs": 404
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒5平6",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵四进一",
+          "move": {
+            "pieceId": "red-pawn-8",
+            "to": {
+              "x": 5,
+              "y": 0
+            }
+          },
+          "depth": 6,
+          "score": 650,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将5平6",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 5,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五进三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "depth": 8,
+          "score": 663,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退4",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵九进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 0,
+              "y": 1
+            }
+          },
+          "depth": 7,
+          "score": 665,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3进5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "仕六进五",
+          "move": {
+            "pieceId": "red-advisor-3",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "depth": 6,
+          "score": 675,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "象9进7",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五退三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 893,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒6平7",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 6,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五平三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 906,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒7平8",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵九平八",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 1,
+              "y": 1
+            }
+          },
+          "depth": 7,
+          "score": 919,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将6平5",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 4,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵八平七",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 2,
+              "y": 1
+            }
+          },
+          "depth": 7,
+          "score": 929,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车3退6",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车三进四",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 6,
+              "y": 0
+            }
+          },
+          "depth": 9,
+          "score": 1708,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将5进1",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车三退一",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 6,
+              "y": 1
+            }
+          },
+          "depth": 9,
+          "score": 1719,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将5退1",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 4,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        }
+      ],
+      "finalBoard": [
+        {
+          "id": "black-general-4",
+          "side": "black",
+          "type": "general",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "id": "black-rook-8",
+          "side": "black",
+          "type": "rook",
+          "x": 2,
+          "y": 1
+        },
+        {
+          "id": "black-pawn-4",
+          "side": "black",
+          "type": "pawn",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "id": "red-rook-0",
+          "side": "red",
+          "type": "rook",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "id": "red-elephant-2",
+          "side": "red",
+          "type": "elephant",
+          "x": 2,
+          "y": 9
+        },
+        {
+          "id": "red-advisor-3",
+          "side": "red",
+          "type": "advisor",
+          "x": 4,
+          "y": 8
+        },
+        {
+          "id": "red-general-4",
+          "side": "red",
+          "type": "general",
+          "x": 4,
+          "y": 9
+        },
+        {
+          "id": "red-advisor-5",
+          "side": "red",
+          "type": "advisor",
+          "x": 5,
+          "y": 9
+        },
+        {
+          "id": "red-elephant-6",
+          "side": "red",
+          "type": "elephant",
+          "x": 4,
+          "y": 7
+        }
+      ]
+    },
+    {
+      "game": 2,
+      "opening": "initial",
+      "masterSide": "black",
+      "winner": "master",
+      "reason": "general-captured",
+      "plies": 78,
+      "materialDifference": 2570,
+      "masterMs": 14097,
+      "legacyMs": 15610,
+      "masterNodes": 4191562,
+      "masterMeanDepth": 5,
+      "moves": [
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马八进七",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮2平3",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": 57,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮二进四",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 7,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮3进4",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 2,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 103,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮二平五",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 4,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马2进3",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": 90,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮五退一",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车1平2",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 1,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 178,
+          "elapsedMs": 403
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮八平九",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 0,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车2进7",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 1,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 171,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马七退五",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮3平7",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 189,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车一进二",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 8,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车2退1",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 1,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 177,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车一平二",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 7,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮8进7",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 7,
+              "y": 9
+            }
+          },
+          "depth": 5,
+          "score": 209,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮九进四",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 0,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮8平6",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "depth": 6,
+          "score": 655,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮九平三",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车2平5",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 654,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五平四",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车5退2",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 670,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车二平五",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车5进3",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "depth": 6,
+          "score": 711,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "相七进五",
+          "move": {
+            "pieceId": "red-elephant-2",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "卒3进1",
+          "move": {
+            "pieceId": "black-pawn-2",
+            "to": {
+              "x": 2,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 680,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车九平八",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马8进7",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 6,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 698,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车八进三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮7退2",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 709,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车八进五",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 1
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马7进5",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 4,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 723,
+          "elapsedMs": 406
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮三平四",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 5,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车9平8",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 758,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车八平三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 6,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "象7进9",
+          "move": {
+            "pieceId": "black-elephant-6",
+            "to": {
+              "x": 8,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 782,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车三平七",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车8进6",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 834,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮四平三",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马3退5",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "depth": 5,
+          "score": 905,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵九进一",
+          "move": {
+            "pieceId": "red-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车8平9",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 8,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 923,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马五进七",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 2,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车9平3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 2,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 945,
+          "elapsedMs": 406
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马七退八",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮7平5",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 5,
+          "score": 1000,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮三退五",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 6,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车3平6",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 1004,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮三平四",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮5平6",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 5,
+              "y": 4
+            }
+          },
+          "depth": 5,
+          "score": 1403,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车七退二",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "前马进4",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 3,
+              "y": 5
+            }
+          },
+          "depth": 5,
+          "score": 1578,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车七退一",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马4进5",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 1532,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "仕六进五",
+          "move": {
+            "pieceId": "red-advisor-3",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车6平2",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 1,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 1594,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅四平五",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车2进3",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "depth": 5,
+          "score": 1766,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "仕五退六",
+          "move": {
+            "pieceId": "red-advisor-3",
+            "to": {
+              "x": 3,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车2平4",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 3,
+              "y": 9
+            }
+          },
+          "depth": 5,
+          "score": 1743,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五进一",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "前马退4",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 3,
+              "y": 5
+            }
+          },
+          "depth": 6,
+          "score": 1796,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车七退二",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车4平6",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "depth": 6,
+          "score": 2071,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵九进一",
+          "move": {
+            "pieceId": "red-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车6退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "depth": 6,
+          "score": 2234,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五退一",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马4进6",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 2239,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五平六",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 3,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马5进4",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 3,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 2239,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车七进六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马6进4",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 3,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 999993,
+          "elapsedMs": 53
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车七平六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 3,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "将5平4",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 3,
+              "y": 0
+            }
+          },
+          "depth": 3,
+          "score": 999995,
+          "elapsedMs": 1
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵九进一",
+          "move": {
+            "pieceId": "red-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮6平4",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 3,
+              "y": 4
+            }
+          },
+          "depth": 1,
+          "score": 999997,
+          "elapsedMs": 1
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅六平五",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "前马进5",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "depth": 1,
+          "score": 999999,
+          "elapsedMs": 0
+        }
+      ],
+      "finalBoard": [
+        {
+          "id": "black-horse-1",
+          "side": "black",
+          "type": "horse",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "id": "black-general-4",
+          "side": "black",
+          "type": "general",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "id": "black-advisor-5",
+          "side": "black",
+          "type": "advisor",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "id": "black-elephant-6",
+          "side": "black",
+          "type": "elephant",
+          "x": 8,
+          "y": 2
+        },
+        {
+          "id": "black-horse-7",
+          "side": "black",
+          "type": "horse",
+          "x": 4,
+          "y": 9
+        },
+        {
+          "id": "black-rook-8",
+          "side": "black",
+          "type": "rook",
+          "x": 5,
+          "y": 8
+        },
+        {
+          "id": "black-cannon-1",
+          "side": "black",
+          "type": "cannon",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "id": "black-pawn-8",
+          "side": "black",
+          "type": "pawn",
+          "x": 8,
+          "y": 3
+        },
+        {
+          "id": "red-elephant-6",
+          "side": "red",
+          "type": "elephant",
+          "x": 6,
+          "y": 9
+        },
+        {
+          "id": "red-pawn-0",
+          "side": "red",
+          "type": "pawn",
+          "x": 0,
+          "y": 3
+        }
+      ]
+    },
+    {
+      "game": 3,
+      "opening": "central-cannons",
+      "masterSide": "red",
+      "winner": "master",
+      "reason": "general-captured",
+      "plies": 61,
+      "materialDifference": 2550,
+      "masterMs": 10917,
+      "legacyMs": 12008,
+      "masterNodes": 3471783,
+      "masterMeanDepth": 4.61,
+      "moves": [
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮二平三",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 25,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车9平8",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮三进四",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 6,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 117,
+          "elapsedMs": 405
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8进8",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车九平八",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "depth": 5,
+          "score": 275,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮2平4",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮三进三",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 6,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 291,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "士6进5",
+          "move": {
+            "pieceId": "black-advisor-5",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "仕六进五",
+          "move": {
+            "pieceId": "red-advisor-3",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "depth": 4,
+          "score": 295,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮4进3",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 3,
+              "y": 5
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵三进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 6,
+              "y": 5
+            }
+          },
+          "depth": 4,
+          "score": 324,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "马2进3",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车八进六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 383,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "马7进6",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 5,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车八平七",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 455,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "马6进5",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马七进五",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 717,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮5进4",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车七进一",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": 720,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮5平1",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 0,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "兵三进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "depth": 4,
+          "score": 723,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮1进3",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 0,
+              "y": 9
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "相七进九",
+          "move": {
+            "pieceId": "red-elephant-2",
+            "to": {
+              "x": 0,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 635,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮1平2",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车七退一",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "depth": 3,
+          "score": 795,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 7
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车七平五",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 1145,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车1进2",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 0,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马二进三",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 1413,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8退5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五退二",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 4,
+              "y": 5
+            }
+          },
+          "depth": 5,
+          "score": 1420,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车1平4",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五平六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 3,
+              "y": 5
+            }
+          },
+          "depth": 5,
+          "score": 1506,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将5平6",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 5,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车六进三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": 1507,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "士5进4",
+          "move": {
+            "pieceId": "black-advisor-5",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮三平六",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 3,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 1540,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车8平7",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 6,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车一平二",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 7,
+              "y": 9
+            }
+          },
+          "depth": 6,
+          "score": 1554,
+          "elapsedMs": 402
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车7进2",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马三进四",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 5,
+              "y": 5
+            }
+          },
+          "depth": 6,
+          "score": 1581,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将6平5",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 4,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车二进九",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 7,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 1611,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将5进1",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马四进五",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 4,
+              "y": 3
+            }
+          },
+          "depth": 5,
+          "score": 1619,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车7平5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马五进三",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 6,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": 1739,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将5平4",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 3,
+              "y": 1
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮六退二",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": 1790,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮2平6",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车二平七",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 2,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 2306,
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "炮6退1",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "马三进四",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 5,
+              "y": 0
+            }
+          },
+          "depth": 6,
+          "score": 2815,
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "车5退4",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 4,
+              "y": 0
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车七平五",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 4,
+              "y": 0
+            }
+          },
+          "depth": 5,
+          "score": 999993,
+          "elapsedMs": 87
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒1进1",
+          "move": {
+            "pieceId": "black-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "车五退二",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 3,
+          "score": 999995,
+          "elapsedMs": 5
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "将4退1",
+          "move": {
+            "pieceId": "black-general-4",
+            "to": {
+              "x": 3,
+              "y": 0
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "炮五平六",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 3,
+              "y": 7
+            }
+          },
+          "depth": 1,
+          "score": 999997,
+          "elapsedMs": 0
+        },
+        {
+          "side": "black",
+          "engine": "legacy-hard",
+          "notation": "卒1进1",
+          "move": {
+            "pieceId": "black-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "master",
+          "notation": "后炮进七",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 3,
+              "y": 0
+            }
+          },
+          "depth": 1,
+          "score": 999999,
+          "elapsedMs": 0
+        }
+      ],
+      "finalBoard": [
+        {
+          "id": "black-cannon-7",
+          "side": "black",
+          "type": "cannon",
+          "x": 5,
+          "y": 8
+        },
+        {
+          "id": "black-pawn-0",
+          "side": "black",
+          "type": "pawn",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "id": "black-pawn-8",
+          "side": "black",
+          "type": "pawn",
+          "x": 8,
+          "y": 3
+        },
+        {
+          "id": "red-elephant-2",
+          "side": "red",
+          "type": "elephant",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "id": "red-advisor-3",
+          "side": "red",
+          "type": "advisor",
+          "x": 4,
+          "y": 8
+        },
+        {
+          "id": "red-general-4",
+          "side": "red",
+          "type": "general",
+          "x": 4,
+          "y": 9
+        },
+        {
+          "id": "red-elephant-6",
+          "side": "red",
+          "type": "elephant",
+          "x": 6,
+          "y": 9
+        },
+        {
+          "id": "red-horse-7",
+          "side": "red",
+          "type": "horse",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "id": "red-rook-8",
+          "side": "red",
+          "type": "rook",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "id": "red-cannon-1",
+          "side": "red",
+          "type": "cannon",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "id": "red-cannon-7",
+          "side": "red",
+          "type": "cannon",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "id": "red-pawn-2",
+          "side": "red",
+          "type": "pawn",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "id": "red-pawn-8",
+          "side": "red",
+          "type": "pawn",
+          "x": 8,
+          "y": 6
+        }
+      ]
+    },
+    {
+      "game": 4,
+      "opening": "central-cannons",
+      "masterSide": "black",
+      "winner": "master",
+      "reason": "general-captured",
+      "plies": 100,
+      "materialDifference": 2720,
+      "masterMs": 18354,
+      "legacyMs": 20007,
+      "masterNodes": 6343044,
+      "masterMeanDepth": 5.98,
+      "moves": [
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车九平八",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车9平8",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 0
+            }
+          },
+          "depth": 6,
+          "score": -17,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮二平四",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮2平4",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 3,
+              "y": 2
+            }
+          },
+          "depth": 5,
+          "score": -8,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马二进三",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车8进6",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": -8,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵三进一",
+          "move": {
+            "pieceId": "red-pawn-6",
+            "to": {
+              "x": 6,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮5进4",
+          "move": {
+            "pieceId": "black-cannon-7",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "depth": 4,
+          "score": 29,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马七进五",
+          "move": {
+            "pieceId": "red-horse-1",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车8平5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": -63,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮四进四",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车5退1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 4,
+              "y": 5
+            }
+          },
+          "depth": 6,
+          "score": -48,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车八进七",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "炮4平5",
+          "move": {
+            "pieceId": "black-cannon-1",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": -8,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮四平七",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车5平7",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 6,
+              "y": 5
+            }
+          },
+          "depth": 5,
+          "score": 17,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马三退五",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马7退5",
+          "move": {
+            "pieceId": "black-horse-7",
+            "to": {
+              "x": 4,
+              "y": 1
+            }
+          },
+          "depth": 6,
+          "score": 39,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "相三进一",
+          "move": {
+            "pieceId": "red-elephant-6",
+            "to": {
+              "x": 8,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车7进1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 6,
+              "y": 6
+            }
+          },
+          "depth": 6,
+          "score": 107,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵七进一",
+          "move": {
+            "pieceId": "red-pawn-2",
+            "to": {
+              "x": 2,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马2进3",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 2,
+              "y": 2
+            }
+          },
+          "depth": 6,
+          "score": 127,
+          "elapsedMs": 405
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮五进五",
+          "move": {
+            "pieceId": "red-cannon-1",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "象3进5",
+          "move": {
+            "pieceId": "black-elephant-2",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 133,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵九进一",
+          "move": {
+            "pieceId": "red-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "卒1进1",
+          "move": {
+            "pieceId": "black-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 142,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "兵九进一",
+          "move": {
+            "pieceId": "red-pawn-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车1进4",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 0,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 168,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车一平三",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 6,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车7平9",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 8,
+              "y": 6
+            }
+          },
+          "depth": 7,
+          "score": 212,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮七平三",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 6,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车9进1",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 8,
+              "y": 7
+            }
+          },
+          "depth": 6,
+          "score": 332,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮三进一",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 6,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马3进4",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 3,
+              "y": 4
+            }
+          },
+          "depth": 5,
+          "score": 377,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮三平四",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 2
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马4进5",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "depth": 5,
+          "score": 391,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车三进八",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 6,
+              "y": 1
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "前马退3",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 2,
+              "y": 5
+            }
+          },
+          "depth": 5,
+          "score": 521,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车八退六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 1,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马3进4",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 3,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 559,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车八平六",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 3,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车9平5",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "depth": 5,
+          "score": 552,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车三退六",
+          "move": {
+            "pieceId": "red-rook-8",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车5平7",
+          "move": {
+            "pieceId": "black-rook-8",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "depth": 7,
+          "score": 525,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马五进三",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 6,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马4退5",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 4,
+              "y": 5
+            }
+          },
+          "depth": 6,
+          "score": 536,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车六进三",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 3,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "前马进6",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 5,
+              "y": 7
+            }
+          },
+          "depth": 6,
+          "score": 554,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五进一",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "卒5进1",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 548,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五平四",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "卒5进1",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 5
+            }
+          },
+          "depth": 7,
+          "score": 637,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车六进二",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 3,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车1平7",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 672,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马三进一",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 8,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "卒5进1",
+          "move": {
+            "pieceId": "black-pawn-4",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "depth": 6,
+          "score": 742,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车六平一",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 8,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马6退8",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "depth": 6,
+          "score": 814,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅四平五",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车7进4",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 6,
+              "y": 8
+            }
+          },
+          "depth": 6,
+          "score": 1045,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "炮四退六",
+          "move": {
+            "pieceId": "red-cannon-7",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马8退7",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 6,
+              "y": 4
+            }
+          },
+          "depth": 6,
+          "score": 1034,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车一平四",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 5,
+              "y": 3
+            }
+          },
+          "elapsedMs": 401
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马7进6",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 5,
+              "y": 6
+            }
+          },
+          "depth": 6,
+          "score": 1041,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五退一",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车7平6",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 1027,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马一进三",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 6,
+              "y": 5
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "象5进3",
+          "move": {
+            "pieceId": "black-elephant-2",
+            "to": {
+              "x": 2,
+              "y": 4
+            }
+          },
+          "depth": 7,
+          "score": 1249,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "车四平七",
+          "move": {
+            "pieceId": "red-rook-0",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马6进7",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 6,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 1822,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马三退五",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 4,
+              "y": 6
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车6退5",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 5,
+              "y": 3
+            }
+          },
+          "depth": 8,
+          "score": 1875,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "马五退四",
+          "move": {
+            "pieceId": "red-horse-7",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车6平3",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 2,
+              "y": 3
+            }
+          },
+          "depth": 8,
+          "score": 2048,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "仕四进五",
+          "move": {
+            "pieceId": "red-advisor-5",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "象3退5",
+          "move": {
+            "pieceId": "black-elephant-2",
+            "to": {
+              "x": 4,
+              "y": 2
+            }
+          },
+          "depth": 7,
+          "score": 2048,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "相七进五",
+          "move": {
+            "pieceId": "red-elephant-2",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车3平6",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 5,
+              "y": 3
+            }
+          },
+          "depth": 7,
+          "score": 2102,
+          "elapsedMs": 402
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五平四",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马7退8",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "depth": 7,
+          "score": 2298,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "相五退七",
+          "move": {
+            "pieceId": "red-elephant-2",
+            "to": {
+              "x": 2,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马8进9",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 8,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 2403,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅四平五",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车6进5",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 2413,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "相七进五",
+          "move": {
+            "pieceId": "red-elephant-2",
+            "to": {
+              "x": 4,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马9退8",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 7,
+              "y": 6
+            }
+          },
+          "depth": 7,
+          "score": 2606,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "相五退七",
+          "move": {
+            "pieceId": "red-elephant-2",
+            "to": {
+              "x": 2,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "马8进7",
+          "move": {
+            "pieceId": "black-horse-1",
+            "to": {
+              "x": 6,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 2831,
+          "elapsedMs": 400
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "仕五进六",
+          "move": {
+            "pieceId": "red-advisor-5",
+            "to": {
+              "x": 3,
+              "y": 7
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车6平4",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 3,
+              "y": 8
+            }
+          },
+          "depth": 7,
+          "score": 2864,
+          "elapsedMs": 401
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅五平四",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车4进1",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 3,
+              "y": 9
+            }
+          },
+          "depth": 8,
+          "score": 999991,
+          "elapsedMs": 234
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅四进一",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 5,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车4平3",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 2,
+              "y": 9
+            }
+          },
+          "depth": 6,
+          "score": 999993,
+          "elapsedMs": 70
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "仕六退五",
+          "move": {
+            "pieceId": "red-advisor-5",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车3退1",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 2,
+              "y": 8
+            }
+          },
+          "depth": 4,
+          "score": 999995,
+          "elapsedMs": 13
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅四退一",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 5,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车3平5",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 4,
+              "y": 8
+            }
+          },
+          "depth": 2,
+          "score": 999997,
+          "elapsedMs": 1
+        },
+        {
+          "side": "red",
+          "engine": "legacy-hard",
+          "notation": "帅四平五",
+          "move": {
+            "pieceId": "red-general-4",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "elapsedMs": 400
+        },
+        {
+          "side": "black",
+          "engine": "master",
+          "notation": "车5进1",
+          "move": {
+            "pieceId": "black-rook-0",
+            "to": {
+              "x": 4,
+              "y": 9
+            }
+          },
+          "depth": 1,
+          "score": 999999,
+          "elapsedMs": 0
+        }
+      ],
+      "finalBoard": [
+        {
+          "id": "black-rook-0",
+          "side": "black",
+          "type": "rook",
+          "x": 4,
+          "y": 9
+        },
+        {
+          "id": "black-horse-1",
+          "side": "black",
+          "type": "horse",
+          "x": 6,
+          "y": 8
+        },
+        {
+          "id": "black-elephant-2",
+          "side": "black",
+          "type": "elephant",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "id": "black-advisor-3",
+          "side": "black",
+          "type": "advisor",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "id": "black-general-4",
+          "side": "black",
+          "type": "general",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "id": "black-advisor-5",
+          "side": "black",
+          "type": "advisor",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "id": "black-elephant-6",
+          "side": "black",
+          "type": "elephant",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "id": "black-horse-7",
+          "side": "black",
+          "type": "horse",
+          "x": 4,
+          "y": 1
+        }
+      ]
+    }
+  ]
+}

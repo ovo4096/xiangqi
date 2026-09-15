@@ -540,6 +540,186 @@
       "src": "./voices/lu-yin/undo-4.mp3",
       "bytes": 23616,
       "sha256": "8e4f8942b48e18df470146e52211ae2cbe78f00fe48218a13525e055a1888b4d"
+    },
+    {
+      "src": "./voices/wen-yi/intro-1.mp3",
+      "bytes": 26496,
+      "sha256": "4d8bad8eba9d186fb2777168a3e18f7938817417ac14f1428057f5e0f776848d"
+    },
+    {
+      "src": "./voices/wen-yi/intro-2.mp3",
+      "bytes": 19584,
+      "sha256": "ac8b8689214a1a72983fa11c48b0415381f9b40dab04fc81c2b8c5298c50ce74"
+    },
+    {
+      "src": "./voices/wen-yi/intro-3.mp3",
+      "bytes": 22032,
+      "sha256": "515c5a4b97ea84ab56853889b30730d2056792e77c85c13835397dd57d80474f"
+    },
+    {
+      "src": "./voices/wen-yi/intro-4.mp3",
+      "bytes": 19296,
+      "sha256": "39fdbdee334ce167ba9c3dc99d5e1a4fee03f7f44726296f3de0fac237ef8b58"
+    },
+    {
+      "src": "./voices/wen-yi/capture-1.mp3",
+      "bytes": 17424,
+      "sha256": "bae9eb8f115c2c09fab944f5f837d75a4edcf95cf3e450928bf182aaa713b43f"
+    },
+    {
+      "src": "./voices/wen-yi/capture-2.mp3",
+      "bytes": 21168,
+      "sha256": "44192402bed6658f6d3cfacacbd9f2c89fcf4934e4ac022e2a4be0d06ab32f71"
+    },
+    {
+      "src": "./voices/wen-yi/capture-3.mp3",
+      "bytes": 18576,
+      "sha256": "a4ec741f1a863a787d753490447e138adbcaf6b324b0e2547850c29e32ab47ae"
+    },
+    {
+      "src": "./voices/wen-yi/capture-4.mp3",
+      "bytes": 18720,
+      "sha256": "7471063164e6665c09d43ca23b260e0fb172fc6b7435d88be77d96331b9b9864"
+    },
+    {
+      "src": "./voices/wen-yi/lost-1.mp3",
+      "bytes": 17136,
+      "sha256": "b1fcba6fcc2ef18cac6cd7342a203e67ffb9b3b3051d05244cfe9ee804dbd4a0"
+    },
+    {
+      "src": "./voices/wen-yi/lost-2.mp3",
+      "bytes": 17712,
+      "sha256": "5e0c7ea71ddb0b9e9e1f7b4a04a701dbd86d33212be3ba0c42949751f9d2dc39"
+    },
+    {
+      "src": "./voices/wen-yi/lost-3.mp3",
+      "bytes": 16560,
+      "sha256": "1421485de2dd78489d6a77dde0c793ea43b5b3b6af826067d688d15e895bef79"
+    },
+    {
+      "src": "./voices/wen-yi/lost-4.mp3",
+      "bytes": 24336,
+      "sha256": "bb638afdcb050f4a3f98057f4b57a2e5dda3027c8d1c429dd5cf6afb05092d3e"
+    },
+    {
+      "src": "./voices/wen-yi/strongCapture-1.mp3",
+      "bytes": 21600,
+      "sha256": "4b0152f9b182b97cac0fdd89e930bf56306d68ffb287517aebf7ab17a374bbf0"
+    },
+    {
+      "src": "./voices/wen-yi/strongCapture-2.mp3",
+      "bytes": 19440,
+      "sha256": "b414d116231bae6d1d736306c2848e8fb2c3d9d42ac1c84aa13609b71275105c"
+    },
+    {
+      "src": "./voices/wen-yi/strongCapture-3.mp3",
+      "bytes": 23184,
+      "sha256": "b0582861915f6b09ad37f54360f1ef92ba08f16acad71e5864cfbf504a907955"
+    },
+    {
+      "src": "./voices/wen-yi/strongCapture-4.mp3",
+      "bytes": 17856,
+      "sha256": "c20853536acaa9e1cb7c4c834abdf8ac34457e908c595dde4ebffabf735a40c4"
+    },
+    {
+      "src": "./voices/wen-yi/strongLost-1.mp3",
+      "bytes": 25056,
+      "sha256": "a966816976b59763449db65d06d3b6a7194c773d8d2afd0aad8fcf5d9576308c"
+    },
+    {
+      "src": "./voices/wen-yi/strongLost-2.mp3",
+      "bytes": 20880,
+      "sha256": "db50f07724886ef902aab42a336cfc454d75cf46a8f591075bfb6583d61dc8dc"
+    },
+    {
+      "src": "./voices/wen-yi/strongLost-3.mp3",
+      "bytes": 23760,
+      "sha256": "0fbe9243e85d945a9f9281bc14dd89042b4eba697fd864f9ba7462b58d3d4dbe"
+    },
+    {
+      "src": "./voices/wen-yi/strongLost-4.mp3",
+      "bytes": 25200,
+      "sha256": "aa35b5f4cc30c22637e42d467d55a6f357b55f154fe9b27cd0405c5affa0e97f"
+    },
+    {
+      "src": "./voices/wen-yi/thinking-1.mp3",
+      "bytes": 20304,
+      "sha256": "e3c82d3f3b9b69c76262c2079c9a66edc634f3f95bfd37d1ad2e053366c3e6fe"
+    },
+    {
+      "src": "./voices/wen-yi/thinking-2.mp3",
+      "bytes": 21600,
+      "sha256": "c14f07719c7d6e2a0c91b038cfc7248502a07a66d771b92c0431f495d4a683bd"
+    },
+    {
+      "src": "./voices/wen-yi/thinking-3.mp3",
+      "bytes": 20880,
+      "sha256": "90bc8f9be21f3bb770bea41c523457ca7d39e2c31420d777f14f511dd7899dc3"
+    },
+    {
+      "src": "./voices/wen-yi/thinking-4.mp3",
+      "bytes": 19728,
+      "sha256": "8fc1c5954e217cbf1c611005267eb7f5b609a9f642f8c78fd25ad7036560fe34"
+    },
+    {
+      "src": "./voices/wen-yi/win-1.mp3",
+      "bytes": 24336,
+      "sha256": "eff18477a8bd89d4307bcc9bf00aea33587d0833f931d274479de45fcf340b79"
+    },
+    {
+      "src": "./voices/wen-yi/win-2.mp3",
+      "bytes": 20592,
+      "sha256": "96e05ac5812354ab241201acd196466d19a7292efb1d52df162a4343c0efe098"
+    },
+    {
+      "src": "./voices/wen-yi/win-3.mp3",
+      "bytes": 22752,
+      "sha256": "fba118e825ad15980888bfe74df9d802cb31b7852dc9cf22d7ed5b01cefa5d57"
+    },
+    {
+      "src": "./voices/wen-yi/win-4.mp3",
+      "bytes": 20304,
+      "sha256": "c230b621f21ff7f90bc8e43269aa161ce9a523c943b68a79e7685ff0aabf4e35"
+    },
+    {
+      "src": "./voices/wen-yi/lose-1.mp3",
+      "bytes": 27792,
+      "sha256": "1b6bc3b1b131e3ce6374e5bcedc408e25de8360acc68f53b9f96f48a4f5445d8"
+    },
+    {
+      "src": "./voices/wen-yi/lose-2.mp3",
+      "bytes": 28512,
+      "sha256": "22f4cf6b5cd4b0a0fcc336fb6981dcc4945286b9fef0112321aa49b178c50cc7"
+    },
+    {
+      "src": "./voices/wen-yi/lose-3.mp3",
+      "bytes": 20736,
+      "sha256": "bc10926f066987b24797d64ad4839e24f1faf9c8961f98234ab8b3d171786f56"
+    },
+    {
+      "src": "./voices/wen-yi/lose-4.mp3",
+      "bytes": 22896,
+      "sha256": "bd0e8f87902a5a44d6780a4d402656ec2d82e4d22c7659e629b05d68eb837506"
+    },
+    {
+      "src": "./voices/wen-yi/undo-1.mp3",
+      "bytes": 27936,
+      "sha256": "c45da6ee7ba6ef6e023beb91302b177c1d3d14604861f5c2046fece92ec7e6fc"
+    },
+    {
+      "src": "./voices/wen-yi/undo-2.mp3",
+      "bytes": 21744,
+      "sha256": "e44d5704effd7a0712a475a2a0e8ba8368c03185cef6c4c655c61e48a533cff4"
+    },
+    {
+      "src": "./voices/wen-yi/undo-3.mp3",
+      "bytes": 22176,
+      "sha256": "4599f11f1e4380a32894a7794571a5bfc1fca1fc362ab42757ae9bece77f01d3"
+    },
+    {
+      "src": "./voices/wen-yi/undo-4.mp3",
+      "bytes": 19296,
+      "sha256": "45c587f824c48eb6202697e1681b127f50517a1e4a154145476e559ab176a109"
     }
   ]
 }

@@ -1,16 +1,14 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowUpRight, Bot, Check, ChevronRight, CircleHelp, Clock3, Flag, Focus, Layers3, Maximize2, Mic, MicOff, Minimize2, Music2, Pause, Play, RotateCcw, RotateCw, UsersRound, Volume2, VolumeX, X } from 'lucide-react';
 import { BoardScene } from './scene/BoardScene';
-import { applyMove, describeMove, getGameResult, initialBoard, legalMoves, pieceLabel, type Piece, type Side } from './game/engine';
+import { applyMove, describeMove, getGameResult, initialBoard, legalMoves, pieceLabel, type Difficulty, type Piece, type Side } from './game/engine';
 import { characters, characterForDifficulty } from './game/characters';
 import { musicPreferences, saveMusicPreferences } from './audio/preferences';
 import { useCharacterVoice } from './audio/useCharacterVoice';
 import { moodLabels, reactionMood, type Mood } from './audio/reactions';
-import type { VoiceCharacterId } from './audio/voiceLines';
 import { CharacterPortrait } from './scene/CharacterPortrait';
 
 type Mode = 'npc' | 'local';
-type Difficulty = 'easy' | 'medium' | 'hard';
 type Coord = { x: number; y: number };
 type RecordEntry = { before: Piece[]; side: Side; pieceId: string; from: Coord; to: Coord; label: string; captured?: Piece };
 type Game = { board: Piece[]; turn: Side; history: RecordEntry[] };
@@ -37,7 +35,7 @@ function App() {
   const [opponentPicker, setOpponentPicker] = useState(false);
   const [pickerDifficulty, setPickerDifficulty] = useState<Difficulty>('medium');
   const [pickerMode, setPickerMode] = useState<Mode>('npc');
-  const voice = useCharacterVoice(character.id as VoiceCharacterId);
+  const voice = useCharacterVoice(character.id);
   const [recentReaction, setRecentReaction] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [view, setView] = useState<'perspective' | 'top'>('perspective');
@@ -175,7 +173,7 @@ function App() {
   useEffect(() => {
     if (!thinking) return;
     const worker = new Worker(new URL('./game/ai.worker.ts', import.meta.url), { type: 'module' });
-    const timer = window.setTimeout(() => worker.postMessage({ board: game.board, difficulty }), 450);
+    const timer = window.setTimeout(() => worker.postMessage({ board: game.board, difficulty, previousPositions: difficulty === 'master' ? game.history.map(entry => entry.before) : undefined }), 450);
     const watchdog = window.setTimeout(() => { worker.terminate(); setAiFailed(true); }, 20000);
     worker.onmessage = (event) => {
       window.clearTimeout(watchdog);
@@ -202,7 +200,7 @@ function App() {
     setMode(nextMode); setDifficulty(nextDifficulty); setGame(freshGame()); setSelectedId(null);
     setMatchStarted(true); setOpponentPicker(false);
     setResultOverride(null); setResultDismissed(false); setSeconds(0); setPending(null); setAiFailed(false); setToast('新对局已开始，红方先行');
-    if (nextMode === 'npc') voice.react('intro', characterForDifficulty(nextDifficulty).id as VoiceCharacterId);
+    if (nextMode === 'npc') voice.react('intro', characterForDifficulty(nextDifficulty).id);
   };
   const requestRestart = (nextMode = mode, nextDifficulty = difficulty) => {
     if (!game.history.length || result) restart(nextMode, nextDifficulty);
@@ -234,7 +232,7 @@ function App() {
     return groups.size ? [...groups.values()].map(({ piece, count }) => <span className="captured-group" key={piece.type} title={`${pieceLabel(piece)} ${count} 枚`}><b className={`captured-piece ${side === 'red' ? 'black-capture' : 'red-capture'}`}>{pieceLabel(piece)}</b>{count > 1 && <small>×{count}</small>}</span>) : <i>—</i>;
   };
   const openOpponentPicker = () => { setPickerDifficulty(difficulty); setPickerMode(mode); setOpponentPicker(true); };
-  const renderCharacters = (value: Difficulty, onSelect: (value: Difficulty) => void) => <div className="character-options" role="group" aria-label="NPC 棋友">{characters.map((npc) => <button key={npc.id} className={`character-option ${value === npc.difficulty ? 'active' : ''}`} data-character={npc.id} aria-label={`与${npc.name}对弈`} aria-pressed={value === npc.difficulty} onClick={() => onSelect(npc.difficulty)}><span className="character-portrait"><img src={npc.portrait} alt="" />{value === npc.difficulty && <span className="character-check"><Check size={11} /></span>}</span><strong>{npc.name}</strong><small>{npc.title}</small></button>)}</div>;
+  const renderCharacters = (value: Difficulty, onSelect: (value: Difficulty) => void) => <div className="character-options" role="group" aria-label="NPC 棋友">{characters.map((npc) => <button key={npc.id} className={`character-option ${value === npc.difficulty ? 'active' : ''}`} data-character={npc.id} aria-label={`与${npc.name}对弈`} aria-pressed={value === npc.difficulty} onClick={() => onSelect(npc.difficulty)}><span className="character-portrait"><img src={npc.portrait} alt="" />{npc.badge && <span className="character-badge">{npc.badge}</span>}{value === npc.difficulty && <span className="character-check"><Check size={11} /></span>}</span><strong>{npc.name}</strong><small>{npc.title}</small></button>)}</div>;
 
   return <div className={`app-shell ${matchStarted ? 'is-playing-game' : 'is-setup'}`}>
     <audio ref={music} className="background-music" src="./music/quiet-pavilion.wav" loop preload="none" onPlay={() => setMusicPlaying(true)} onPause={() => setMusicPlaying(false)} onError={() => { setMusicError(true); setMusicPlaying(false); }} />
@@ -285,7 +283,7 @@ function App() {
             <CharacterPortrait id={character.id} name={character.name} mood={mood} speaking={voice.speaking} reactionKey={voice.emotion?.serial || 0} />
             <div className="opponent-identity"><div><h3>{character.name}</h3><small>{character.title}</small></div><span className="mood-label" data-mood={mood}>{moodLabels[mood]}</span></div>
             <div className={`reaction-bubble ${voice.speaking ? 'is-speaking' : ''}`} aria-live="polite" data-event={voice.reaction?.line.event || 'idle'}><p>{voice.error ? '语音暂未能播放，可点击重播。' : voice.reaction?.line.text || character.invitation}</p></div>
-            <div className="opponent-controls" role="group" aria-label="角色语音" title="三位角色使用合成语音，全部随游戏离线提供">
+            <div className="opponent-controls" role="group" aria-label="角色语音" title="四位角色使用合成语音，全部随游戏离线提供">
               <button className="voice-toggle" aria-label={voice.enabled ? '关闭角色语音' : '打开角色语音'} aria-pressed={voice.enabled} onClick={() => voice.setEnabled(!voice.enabled)}>{voice.enabled ? <Mic size={13} /> : <MicOff size={13} />}<span>语音</span></button>
               <button className="voice-replay" aria-label="重播角色语音" title="重播这一句" onClick={voice.replay} disabled={!voice.reaction}><RotateCcw size={13} /></button>
               <input type="range" min="0" max="1" step="0.05" value={voice.volume} aria-label="角色语音音量" onChange={(event) => voice.setVolume(Number(event.target.value))} />
@@ -309,7 +307,7 @@ function App() {
 
     {opponentPicker && <Modal title="更换棋友" onClose={() => setOpponentPicker(false)} className="opponent-picker"><p className="modal-intro">选一位棋友，另开一局。当前对局会在确认后结束。</p><div className="mode-tabs" role="group" aria-label="对战模式"><button className={pickerMode === 'npc' ? 'active' : ''} aria-pressed={pickerMode === 'npc'} onClick={() => setPickerMode('npc')}><Bot size={17} />人机对战</button><button className={pickerMode === 'local' ? 'active' : ''} aria-pressed={pickerMode === 'local'} onClick={() => setPickerMode('local')}><UsersRound size={17} />双人对战</button></div>{pickerMode === 'npc' && <>{renderCharacters(pickerDifficulty, setPickerDifficulty)}<div className="character-intro"><p>{characterForDifficulty(pickerDifficulty).invitation}</p><span>{characterForDifficulty(pickerDifficulty).style}</span></div></>}<div className="modal-actions"><button className="secondary-button" onClick={() => setOpponentPicker(false)}>继续当前棋局</button><button className="primary-button" onClick={() => restart(pickerMode, pickerDifficulty)}>开始新对局 <ArrowUpRight size={16} /></button></div></Modal>}
 
-    {help && <Modal title="对弈指南" onClose={() => setHelp(false)} className="help-modal"><p className="modal-intro">一方棋盘，红黑两军。吃掉对方的将或帅，即可获胜。</p><div className="guide-items"><div><span>01</span><div><h3>选择你的对手</h3><p>从阿棠、沈砚、陆隐中选择一位棋友，由你执红先行。双人对战在同一设备上交替操作。</p></div></div><div><span>02</span><div><h3>选棋，再落子</h3><p>点击己方棋子查看合法落点，再点击标记的位置。再次点击所选棋子可取消选择。</p></div></div><div><span>03</span><div><h3>换个角度看棋局</h3><p>拖动棋盘旋转视角，滚轮或双指缩放。「俯视」切换为平直视角，「重置视角」回到初始位置。</p></div></div></div><div className="rules-grid"><p><b>车</b>横直行走，不可越子</p><p><b>马</b>走日字，注意蹩马腿</p><p><b>象</b>走田字，不得过河</p><p><b>士</b>斜行一步，不离九宫</p><p><b>将</b>九宫内行走，照面可飞将</p><p><b>炮</b>走如车，隔一子吃子</p><p><b>兵</b>向前一步，过河后可横行</p></div><p className="keyboard-help">键盘操作：聚焦棋盘后，方向键移动光标，回车或空格选棋 / 落子，Esc 取消。不提示将军，也不强制应将；可以冒险走其他棋，直到将或帅被吃才判胜。背景音乐支持独立暂停和音量调节。</p><button className="primary-button" onClick={() => setHelp(false)}>入局对弈 <ChevronRight size={16} /></button></Modal>}
+    {help && <Modal title="对弈指南" onClose={() => setHelp(false)} className="help-modal"><p className="modal-intro">一方棋盘，红黑两军。吃掉对方的将或帅，即可获胜。</p><div className="guide-items"><div><span>01</span><div><h3>选择你的对手</h3><p>从阿棠、沈砚、陆隐、闻弈中选择一位棋友，由你执红先行。双人对战在同一设备上交替操作。</p></div></div><div><span>02</span><div><h3>选棋，再落子</h3><p>点击己方棋子查看合法落点，再点击标记的位置。再次点击所选棋子可取消选择。</p></div></div><div><span>03</span><div><h3>换个角度看棋局</h3><p>拖动棋盘旋转视角，滚轮或双指缩放。「俯视」切换为平直视角，「重置视角」回到初始位置。</p></div></div></div><div className="rules-grid"><p><b>车</b>横直行走，不可越子</p><p><b>马</b>走日字，注意蹩马腿</p><p><b>象</b>走田字，不得过河</p><p><b>士</b>斜行一步，不离九宫</p><p><b>将</b>九宫内行走，照面可飞将</p><p><b>炮</b>走如车，隔一子吃子</p><p><b>兵</b>向前一步，过河后可横行</p></div><p className="keyboard-help">键盘操作：聚焦棋盘后，方向键移动光标，回车或空格选棋 / 落子，Esc 取消。不提示将军，也不强制应将；可以冒险走其他棋，直到将或帅被吃才判胜。背景音乐支持独立暂停和音量调节。</p><button className="primary-button" onClick={() => setHelp(false)}>入局对弈 <ChevronRight size={16} /></button></Modal>}
     {pending && <Modal title="开始新的对局？" onClose={() => setPending(null)}><p className="modal-intro">当前棋局和走棋记录将被清空，新一局由红方先行。</p><div className="modal-actions"><button className="secondary-button" onClick={() => setPending(null)}>继续当前棋局</button><button className="primary-button" onClick={() => restart(pending.mode, pending.difficulty)}>开始新对局 <ArrowUpRight size={16} /></button></div></Modal>}
     {surrender && <Modal title="确认认输？" onClose={() => setSurrender(false)}><p className="modal-intro">{sideName(game.turn)}认输后，本局结束，{sideName(game.turn === 'red' ? 'black' : 'red')}获胜。</p><div className="modal-actions"><button className="secondary-button" onClick={() => setSurrender(false)}>再想一步</button><button className="primary-button" onClick={() => { setResultOverride({ winner: game.turn === 'red' ? 'black' : 'red', reason: `${sideName(game.turn)}认输` }); setSelectedId(null); setSurrender(false); if (mode === 'npc') voice.react(game.turn === 'red' ? 'win' : 'lose'); }}>确认认输</button></div></Modal>}
     {result && !resultDismissed && !surrender && !pending && <Modal title="本局已结束" onClose={() => setResultDismissed(true)} className="result-modal"><span className={`result-piece ${result.winner === 'red' ? 'red-avatar' : 'black-avatar'}`}>{result.winner === 'red' ? '帅' : result.winner === 'black' ? '将' : '和'}</span><h3>{status}</h3><p>{result.reason}</p><span className="result-details">共 {game.history.length} 步 · {formatTime(seconds)}</span><button className="primary-button" onClick={() => restart()}>再弈一局 <RotateCw size={17} /></button><button className="text-button" onClick={() => setResultDismissed(true)}><ArrowLeft size={15} />回看棋局</button></Modal>}

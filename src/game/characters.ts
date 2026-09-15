@@ -1,7 +1,8 @@
 import type { Difficulty } from './engine';
+import type { VoiceCharacterId } from '../audio/voiceLines';
 
 export type Character = {
-  id: string;
+  id: VoiceCharacterId;
   name: string;
   title: string;
   difficulty: Difficulty;
@@ -9,6 +10,7 @@ export type Character = {
   style: string;
   invitation: string;
   thinking: string;
+  badge?: string;
 };
 
 export const characters: Character[] = [
@@ -26,6 +28,11 @@ export const characters: Character[] = [
     id: 'lu-yin', name: '陆隐', title: '山中棋隐', difficulty: 'hard',
     portrait: './characters/lu-yin.png', style: '推演更深，落子审慎。适合认真挑战。',
     invitation: '「棋中有远山，落子须看远。」', thinking: '静观全局，方知下一步。',
+  },
+  {
+    id: 'wen-yi', name: '闻弈', title: '天元棋师', difficulty: 'master', badge: '最强',
+    portrait: './characters/wen-yi.png', style: '擅长连环攻防，兼顾得失与全局。落子前稍作长考，适合进阶挑战。',
+    invitation: '「眼前的一子，或许连着十步之后。」', thinking: '棋有远近，让我再推演几步。',
   },
 ];
 

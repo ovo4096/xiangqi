@@ -4,8 +4,18 @@ import { statSync } from 'node:fs';
 import path from 'node:path';
 import { createLinePicker } from './reactions';
 import { voiceLines, type VoiceCharacterId, type VoiceEvent } from './voiceLines';
+import { characters as opponents } from '../game/characters';
 
 const characters = Object.keys(voiceLines) as VoiceCharacterId[];
+test('every selectable opponent has an independent voice bank and three packaged expressions', () => {
+  assert.equal(opponents.length, 4);
+  assert.equal(new Set(opponents.map(character => character.difficulty)).size, 4);
+  assert.equal(opponents.find(character => character.difficulty === 'master')?.id, 'wen-yi');
+  assert.deepEqual(opponents.map(character => character.id).sort(), [...characters].sort());
+  for (const character of opponents) for (const suffix of ['', '-joy', '-regret']) {
+    assert.ok(statSync(`public/characters/${character.id}${suffix}.png`).size > 1000);
+  }
+});
 test('reaction bags exhaust each category before repeating and never repeat across cycle boundaries', () => {
   const pick = createLinePicker(() => 0.5);
   for (const character of characters) for (const event of Object.keys(voiceLines[character]) as VoiceEvent[]) {
@@ -40,5 +50,5 @@ test('the complete reaction catalogue ships local audio and contains no check an
       sources.add(line.src); count++;
     }
   }
-  assert.equal(count, 108);
+  assert.equal(count, 144);
 });
