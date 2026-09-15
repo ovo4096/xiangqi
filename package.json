@@ -1,7 +1,7 @@
 {
   "name": "yijing-xiangqi",
   "private": true,
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "弈境 · 中国象棋 — 木质 3D 棋盘、人机对战与本地双人对战",
   "author": "ovo4096",
   "license": "UNLICENSED",
@@ -15,7 +15,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "tsx --test src/game/engine.test.ts src/game/master.test.ts src/audio/reactions.test.ts && node --test electron/*.test.cjs",
+    "test": "tsx --test src/game/engine.test.ts src/game/master.test.ts src/audio/reactions.test.ts src/audio/voiceScheduler.test.ts && node --test electron/*.test.cjs",
     "preelectron:dev": "node node_modules/electron/install.js",
     "electron:dev": "npm run build && electron .",
     "preelectron:pack": "node node_modules/electron/install.js",

@@ -16,12 +16,13 @@ ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "voice-script.json"
 EVENTS = (
     "intro", "capture", "lost", "strongCapture", "strongLost",
-    "thinking", "win", "lose", "undo",
+    "exchange", "thinking", "win", "lose", "undo",
 )
 # Rate/pitch are modest prosody changes, not a claim of acted emotional speech.
 PROSODY = {
     "intro": (0, 0), "capture": (5, 3), "lost": (-5, -3),
     "strongCapture": (8, 5), "strongLost": (-7, -4),
+    "exchange": (-2, 0),
     "thinking": (-5, -1), "win": (6, 4), "lose": (-6, -3), "undo": (0, 0),
 }
 

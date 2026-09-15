@@ -50,5 +50,5 @@ test('the complete reaction catalogue ships local audio and contains no check an
       sources.add(line.src); count++;
     }
   }
-  assert.equal(count, 144);
+  assert.equal(count, 160);
 });

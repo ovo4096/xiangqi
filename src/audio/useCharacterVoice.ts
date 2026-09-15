@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { createLinePicker, voicePriority } from './reactions';
+import { useCallback, useEffect, useRef, useState, type SetStateAction } from 'react';
+import { createLinePicker } from './reactions';
+import { createVoiceScheduler, type MoveReaction, type ScheduledReaction, type VoiceScheduler } from './voiceScheduler';
 import type { VoiceCharacterId, VoiceEvent, VoiceLine } from './voiceLines';
 
 function preferences() {
@@ -12,94 +13,157 @@ function preferences() {
 
 export function useCharacterVoice(characterId: VoiceCharacterId) {
   const element = useRef<HTMLAudioElement>(null);
-  const [enabled, setEnabled] = useState(() => preferences().enabled);
+  const [enabled, setEnabledState] = useState(() => preferences().enabled);
   const [volume, setVolume] = useState(() => preferences().volume);
   const [speaking, setSpeaking] = useState(false);
   const [error, setError] = useState(false);
   const [reaction, setReaction] = useState<{ line: VoiceLine; serial: number } | null>(null);
   const [emotion, setEmotion] = useState<{ event: VoiceEvent; serial: number } | null>(null);
-  const current = useRef<VoiceLine | null>(null);
-  const pending = useRef<VoiceLine | null>(null);
+  const visibleLine = useRef<VoiceLine | null>(null);
   const pick = useRef(createLinePicker());
-  const lastSpoke = useRef(0);
   const serial = useRef(0);
-  const emotionSerial = useRef(0);
   const generation = useRef(0);
+  const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mediaCleanup = useRef<(() => void) | null>(null);
+  const scheduler = useRef<VoiceScheduler | null>(null);
+  const mounted = useRef(true);
   const state = useRef({ enabled, volume, characterId });
   state.current = { enabled, volume, characterId };
 
-  const stop = useCallback(() => {
-    generation.current++;
-    pending.current = null;
-    current.current = null;
-    element.current?.pause();
-    setSpeaking(false);
+  const clearFade = useCallback(() => {
+    if (fadeTimer.current !== null) clearTimeout(fadeTimer.current);
+    fadeTimer.current = null;
   }, []);
 
-  const play = useCallback((line: VoiceLine) => {
-    const player = element.current;
+  const stopAudio = useCallback(({ fadeMs, clearCaption }: { fadeMs: number; clearCaption: boolean }) => {
     const ticket = ++generation.current;
-    current.current = line;
-    lastSpoke.current = Date.now();
-    setReaction({ line, serial: ++serial.current });
+    clearFade();
+    mediaCleanup.current?.(); mediaCleanup.current = null;
+    if (clearCaption) {
+      visibleLine.current = null;
+      if (mounted.current) { setReaction(null); setEmotion(null); }
+    }
+    if (mounted.current) setError(false);
+    const player = element.current;
+    if (!player || player.paused || !fadeMs) {
+      player?.pause();
+      if (player) player.volume = state.current.volume;
+      if (mounted.current) setSpeaking(false);
+      return;
+    }
+    const started = performance.now(), fromVolume = player.volume;
+    const fade = () => {
+      if (ticket !== generation.current || player !== element.current) return;
+      const progress = Math.min(1, (performance.now() - started) / fadeMs);
+      player.volume = fromVolume * (1 - progress);
+      if (progress < 1) fadeTimer.current = setTimeout(fade, 20);
+      else {
+        fadeTimer.current = null;
+        player.pause(); player.volume = state.current.volume;
+        if (mounted.current) setSpeaking(false);
+      }
+    };
+    fade();
+  }, [clearFade]);
+
+  const publish = useCallback((scheduled: ScheduledReaction) => {
+    const previous = visibleLine.current;
+    const line = scheduled.replay && previous?.characterId === scheduled.characterId && previous.event === scheduled.event
+      ? previous : pick.current(scheduled.characterId, scheduled.event);
+    const ticket = ++generation.current;
+    clearFade();
+    mediaCleanup.current?.(); mediaCleanup.current = null;
+    visibleLine.current = line;
+    const nextSerial = ++serial.current;
+    // A settled exchange commits its caption and expression together, also when muted.
+    setReaction({ line, serial: nextSerial });
+    setEmotion({ event: line.event, serial: nextSerial });
     setError(false);
-    if (!player || !state.current.enabled) { current.current = null; return; }
-    player.pause();
+    const player = element.current;
+    player?.pause();
+    setSpeaking(false);
+    if (!player || !scheduled.audible || !state.current.enabled) return;
     player.src = line.src;
     player.volume = state.current.volume;
     player.load();
-    void player.play().catch((reason: unknown) => {
-      if (ticket !== generation.current) return;
-      current.current = null;
+    const source = player.src;
+    const currentMedia = () => ticket === generation.current && mounted.current
+      && scheduler.current?.isCurrent(scheduled.token) && player.currentSrc === source;
+    const paused = () => { if (currentMedia() && player.paused) setSpeaking(false); };
+    const ended = () => {
+      if (currentMedia() && player.ended && scheduler.current?.finished(scheduled.token)) setSpeaking(false);
+    };
+    const failed = () => {
+      if (currentMedia() && player.error && scheduler.current?.finished(scheduled.token)) { setError(true); setSpeaking(false); }
+    };
+    player.addEventListener('pause', paused);
+    player.addEventListener('ended', ended);
+    player.addEventListener('error', failed);
+    mediaCleanup.current = () => {
+      player.removeEventListener('pause', paused);
+      player.removeEventListener('ended', ended);
+      player.removeEventListener('error', failed);
+    };
+    void player.play().then(() => {
+      if (ticket !== generation.current || !mounted.current) return;
+      if (scheduler.current?.started(scheduled.token) && !player.paused) setSpeaking(true);
+    }).catch((reason: unknown) => {
+      if (ticket !== generation.current || !mounted.current || !scheduler.current?.finished(scheduled.token)) return;
       setSpeaking(false);
       if (!(reason instanceof DOMException && reason.name === 'AbortError')) setError(true);
     });
-  }, []);
+  }, [clearFade]);
+
+  const getScheduler = useCallback(() => {
+    if (!scheduler.current) scheduler.current = createVoiceScheduler({
+      now: () => performance.now(),
+      setTimeout: (callback, delay) => setTimeout(callback, delay),
+      clearTimeout: timer => clearTimeout(timer as ReturnType<typeof setTimeout>),
+    }, { publish, stop: stopAudio }, state.current.enabled);
+    return scheduler.current;
+  }, [publish, stopAudio]);
 
   const react = useCallback((event: VoiceEvent, target = state.current.characterId) => {
-    if (event === 'thinking' && (current.current || Date.now() - lastSpoke.current < 22000)) return;
-    const line = pick.current(target, event);
-    // The face reacts immediately, even if a previous spoken sentence is finishing.
-    setEmotion({ event, serial: ++emotionSerial.current });
-    const playing = current.current;
-    if (state.current.enabled && playing && voicePriority[event] < 4) {
-      // Keep just the most important next reaction; voices never overlap or build a backlog.
-      if (!pending.current || voicePriority[event] >= voicePriority[pending.current.event]) pending.current = line;
-      return;
-    }
-    pending.current = null;
-    play(line);
-  }, [play]);
-
-  const finish = useCallback(() => {
-    current.current = null;
-    setSpeaking(false);
-    const next = pending.current;
-    pending.current = null;
-    if (next && state.current.enabled && next.characterId === state.current.characterId) play(next);
-  }, [play]);
-
-  const reset = useCallback(() => { stop(); setReaction(null); setEmotion(null); setError(false); }, [stop]);
+    getScheduler().react(event, target);
+  }, [getScheduler]);
+  const onMove = useCallback((move: MoveReaction) => {
+    getScheduler().onMove(move, state.current.characterId);
+  }, [getScheduler]);
+  const reset = useCallback(() => { getScheduler().reset(); }, [getScheduler]);
+  const setEnabled = useCallback((next: SetStateAction<boolean>) => {
+    const value = typeof next === 'function' ? next(state.current.enabled) : next;
+    state.current.enabled = value;
+    setEnabledState(value);
+    getScheduler().setEnabled(value);
+  }, [getScheduler]);
   const replay = useCallback(() => {
-    if (!reaction || reaction.line.characterId !== state.current.characterId) return;
-    stop();
-    state.current.enabled = true;
-    setEnabled(true);
-    setEmotion({ event: reaction.line.event, serial: ++emotionSerial.current });
-    play(reaction.line);
-  }, [reaction, stop, play]);
+    const line = visibleLine.current;
+    if (!line || line.characterId !== state.current.characterId) return;
+    state.current.enabled = true; setEnabledState(true);
+    getScheduler().replay(line.event, line.characterId);
+  }, [getScheduler]);
 
   useEffect(() => {
-    if (element.current) element.current.volume = volume;
+    if (element.current && fadeTimer.current === null) element.current.volume = volume;
     try {
       localStorage.setItem('yijing.voice.enabled', String(enabled));
       localStorage.setItem('yijing.voice.volume', String(volume));
     } catch { /* Voice playback does not depend on preference storage. */ }
-    if (!enabled) stop();
-  }, [enabled, volume, stop]);
-  useEffect(() => () => { generation.current++; element.current?.pause(); }, []);
+  }, [enabled, volume]);
+  useEffect(() => { getScheduler().setContext(characterId); }, [characterId, getScheduler]);
+  useEffect(() => {
+    mounted.current = true;
+    getScheduler();
+    return () => {
+      mounted.current = false;
+      scheduler.current?.dispose(); scheduler.current = null;
+      generation.current++; clearFade(); element.current?.pause();
+    };
+  }, [getScheduler, clearFade]);
 
-  return { element, enabled, setEnabled, volume, setVolume, speaking, error, reaction, emotion, react, reset, replay,
-    onPlay: () => setSpeaking(true), onPause: () => setSpeaking(false), onEnded: finish,
-    onError: () => { setError(true); finish(); } };
+  return { element, enabled, setEnabled, volume, setVolume, speaking, error, reaction, emotion, react, onMove, reset, replay,
+    // Playback promises and per-source native listeners carry immutable generation tokens.
+    // React handlers remain for the existing component interface and cannot adopt old events.
+    onPlay: () => {},
+    onPause: () => {}, onEnded: () => {}, onError: () => {} };
 }

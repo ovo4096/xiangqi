@@ -102,6 +102,26 @@
       "sha256": "b279f28cbe1e50662c3521c39a90eaa53499f7b82a34ca3ffb8192c2396037fc"
     },
     {
+      "src": "./voices/a-tang/exchange-1.mp3",
+      "bytes": 19584,
+      "sha256": "e327f543b0d4ee0a6054883bdf035ea64d07bc2aa2b821c25c1ba29958824271"
+    },
+    {
+      "src": "./voices/a-tang/exchange-2.mp3",
+      "bytes": 19152,
+      "sha256": "ef23a126c962adc154ba0453b4086ea8d5ca46daf02d6375adab13a9e26d85ae"
+    },
+    {
+      "src": "./voices/a-tang/exchange-3.mp3",
+      "bytes": 22176,
+      "sha256": "e52b006c854f7ebed12555a8ba6aec526fdb86ed854b859cd934275ed69c1e7d"
+    },
+    {
+      "src": "./voices/a-tang/exchange-4.mp3",
+      "bytes": 22608,
+      "sha256": "01c40654fae17dc342a04b8d2872962c8685dda3dda78b8a1a9f1d7cdbfb783e"
+    },
+    {
       "src": "./voices/a-tang/thinking-1.mp3",
       "bytes": 18576,
       "sha256": "395057604a007a961663d60b849eae4e26ba966b832274ab3409ac5b0a3e5194"
@@ -280,6 +300,26 @@
       "src": "./voices/shen-yan/strongLost-4.mp3",
       "bytes": 21744,
       "sha256": "d09d7f2f983a581a14abd94cf46fab845073b64293b0a0f02ac03185f0ea9769"
+    },
+    {
+      "src": "./voices/shen-yan/exchange-1.mp3",
+      "bytes": 26208,
+      "sha256": "3b382b4ced2d39c91360d66f5466295297efa22655386e62322c4d7be89302ac"
+    },
+    {
+      "src": "./voices/shen-yan/exchange-2.mp3",
+      "bytes": 23040,
+      "sha256": "df3ca40f5aec55b7b232593e1659bf7918f82348c2d70e6870b86a97521e3f6e"
+    },
+    {
+      "src": "./voices/shen-yan/exchange-3.mp3",
+      "bytes": 23040,
+      "sha256": "701d441c4f73a3913a0c36ca2caeb882e87fcddabc1edcea085c6f3891dc830e"
+    },
+    {
+      "src": "./voices/shen-yan/exchange-4.mp3",
+      "bytes": 20880,
+      "sha256": "61991fe578af876abf0c662ea01dfbc67ff1db457e76a65737521adcb9fee3ab"
     },
     {
       "src": "./voices/shen-yan/thinking-1.mp3",
@@ -462,6 +502,26 @@
       "sha256": "07433625d04f5cfff18a73d11bd717f25131725d7fe964f60e65f9bb4316b324"
     },
     {
+      "src": "./voices/lu-yin/exchange-1.mp3",
+      "bytes": 22032,
+      "sha256": "0288cccfee8240ef2e1463af49fe27d203c786818c0c9dc5a5d14a5a6e9f8182"
+    },
+    {
+      "src": "./voices/lu-yin/exchange-2.mp3",
+      "bytes": 24336,
+      "sha256": "3f7c229c4c72bc544f5d9f95d49c31e0f9501a83bfb75fe8077699301187ddba"
+    },
+    {
+      "src": "./voices/lu-yin/exchange-3.mp3",
+      "bytes": 23616,
+      "sha256": "b77f50c19f4d1f704a2ca7ed06dad9784c70e0351ff2a9346992909839ef4e8e"
+    },
+    {
+      "src": "./voices/lu-yin/exchange-4.mp3",
+      "bytes": 25344,
+      "sha256": "98c72ed8f4a103bfdb01b0a6ed60d6cbd52cc1f75b1a4fd039752a8e36b9e0ed"
+    },
+    {
       "src": "./voices/lu-yin/thinking-1.mp3",
       "bytes": 19008,
       "sha256": "806f041b118014533445d7a735b478aa173941d989ee3ba14408663809419845"
@@ -640,6 +700,26 @@
       "src": "./voices/wen-yi/strongLost-4.mp3",
       "bytes": 25200,
       "sha256": "aa35b5f4cc30c22637e42d467d55a6f357b55f154fe9b27cd0405c5affa0e97f"
+    },
+    {
+      "src": "./voices/wen-yi/exchange-1.mp3",
+      "bytes": 22896,
+      "sha256": "fc5b4d26b6206c52f7fb5f72cb6facb8f2814e070ed264c5fafe5286093c6e49"
+    },
+    {
+      "src": "./voices/wen-yi/exchange-2.mp3",
+      "bytes": 23184,
+      "sha256": "dc506ae9ab12cc468d15e62b37b8b17bb23ffb61b478e912f891e8a374e66f72"
+    },
+    {
+      "src": "./voices/wen-yi/exchange-3.mp3",
+      "bytes": 21456,
+      "sha256": "853b59f24e0acd6a67a43b82f005119d3460417b8d65e4f7ed1be3515bd6a058"
+    },
+    {
+      "src": "./voices/wen-yi/exchange-4.mp3",
+      "bytes": 22464,
+      "sha256": "d1acd2838fd232d14e0051b050b79a11e870a8402296228a1a93235220db582e"
     },
     {
       "src": "./voices/wen-yi/thinking-1.mp3",

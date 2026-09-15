@@ -3,14 +3,14 @@ import { voiceLines, type VoiceCharacterId, type VoiceEvent, type VoiceLine } fr
 export type Mood = 'calm' | 'thinking' | 'confident' | 'concerned' | 'happy' | 'regret' | 'win' | 'lose';
 export const reactionMood: Record<VoiceEvent, Mood> = {
   intro: 'confident', capture: 'happy', lost: 'regret', strongCapture: 'happy',
-  strongLost: 'regret', thinking: 'thinking', win: 'win', lose: 'lose', undo: 'calm',
+  strongLost: 'regret', exchange: 'calm', thinking: 'thinking', win: 'win', lose: 'lose', undo: 'calm',
 };
 export const moodLabels: Record<Mood, string> = {
   calm: '静候落子', thinking: '凝神思索', confident: '从容自若', concerned: '稍显凝重',
   happy: '喜上眉梢', regret: '懊恼片刻', win: '欣然一笑', lose: '甘拜下风',
 };
 export const voicePriority: Record<VoiceEvent, number> = {
-  thinking: 0, intro: 1, undo: 1, capture: 2, lost: 2, strongCapture: 3, strongLost: 3, win: 4, lose: 4,
+  thinking: 0, intro: 1, undo: 1, capture: 2, lost: 2, strongCapture: 3, strongLost: 3, exchange: 3, win: 4, lose: 4,
 };
 
 /** Every line in a category gets a turn before repeats; adjacent cycles also differ. */

@@ -142,15 +142,14 @@ function App() {
     setMatchStarted(true);
     if (mode === 'npc') {
       const outcome = getGameResult(nextBoard, game.turn === 'red' ? 'black' : 'red');
-      if (outcome) voice.react(outcome.winner === 'black' ? 'win' : 'lose');
-      else if (captured) {
-        const important = ['rook', 'horse', 'cannon'].includes(captured.type);
-        voice.react(piece.side === 'black' ? important ? 'strongCapture' : 'capture' : important ? 'strongLost' : 'lost');
-      } else if (!matchStarted) voice.react('intro');
-      else if (piece.side === 'red' && game.history.length >= 4 && game.history.length % 8 === 4) voice.react('thinking');
+      voice.onMove({ side: piece.side, captured: captured?.type, outcome: outcome ? outcome.winner === 'black' ? 'win' : 'lose' : undefined });
+      if (!outcome && !captured) {
+        if (!matchStarted) voice.react('intro');
+        else if (piece.side === 'red' && game.history.length >= 4 && game.history.length % 8 === 4) voice.react('thinking');
+      }
     }
     setSelectedId(null); setAiFailed(false); playSound(!!captured);
-  }, [game, result, playSound, mode, matchStarted, voice.react]);
+  }, [game, result, playSound, mode, matchStarted, voice.react, voice.onMove]);
 
   clickRef.current = (x, y) => {
     if (result || thinking) return;

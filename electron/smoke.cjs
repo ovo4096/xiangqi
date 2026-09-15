@@ -389,7 +389,7 @@ async function runSmokeTest({ app, window, distPath, url }) {
         await clickText('重新开局');
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && !document.querySelector('dialog[open]')");
         await moveBetween({ x: 1, y: 7 }, { x: 1, y: 0 });
-        const regretting = await execute(`({
+        const pendingExchange = await execute(`({
           moves: document.querySelector('.move-count').textContent.trim(),
           event: document.querySelector('.reaction-bubble').dataset.event,
           mood: document.querySelector('.portrait-stage').dataset.mood,
@@ -398,15 +398,14 @@ async function runSmokeTest({ app, window, distPath, url }) {
           caption: document.querySelector('.reaction-bubble p').textContent,
           audioPaused: document.querySelector('.character-voice').paused,
         })`);
-        report.checks.captureEmotions = { regretting };
-        assert.equal(regretting.moves, '01 步', 'Lost-piece reaction must be observable before the NPC reply');
-        assert.deepEqual(regretting.captured, ['马'], 'The exchange did not actually capture the NPC horse');
-        assert.equal(regretting.event, 'strongLost');
-        assert.equal(regretting.mood, 'regret');
-        assert.equal(regretting.expression, 'regret');
-        assert.equal(regretting.audioPaused, true, 'Muted reactions must not start speech');
+        report.checks.captureEmotions = { pendingExchange };
+        assert.equal(pendingExchange.moves, '01 步', 'The first capture must be observable before the NPC reply');
+        assert.deepEqual(pendingExchange.captured, ['马'], 'The exchange did not actually capture the NPC horse');
+        assert.ok(!['lost', 'strongLost'].includes(pendingExchange.event), 'Loss dialogue must wait until the NPC has considered its reply');
+        assert.equal(pendingExchange.audioPaused, true, 'Muted reactions must not start speech');
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步' && document.querySelector('.status-top strong')?.textContent === '红方行棋'");
-        const celebrating = await execute(`({
+        await waitFor("document.querySelector('.reaction-bubble')?.dataset.event === 'exchange'");
+        const resolvedExchange = await execute(`({
           event: document.querySelector('.reaction-bubble').dataset.event,
           mood: document.querySelector('.portrait-stage').dataset.mood,
           expression: document.querySelector('.portrait-stage').dataset.expression,
@@ -415,13 +414,13 @@ async function runSmokeTest({ app, window, distPath, url }) {
           caption: document.querySelector('.reaction-bubble p').textContent,
           audioPaused: document.querySelector('.character-voice').paused,
         })`);
-        report.checks.captureEmotions.celebrating = celebrating;
-        assert.deepEqual(celebrating.captured, ['炮'], 'The NPC reply must actually capture the red cannon in this exchange');
-        assert.equal(celebrating.event, 'strongCapture');
-        assert.equal(celebrating.mood, 'happy');
-        assert.equal(celebrating.expression, 'joy');
-        assert.equal(celebrating.audioPaused, true);
-        assert.notEqual(celebrating.caption, regretting.caption, 'Capturing and losing a piece need different dialogue');
+        report.checks.captureEmotions.resolvedExchange = resolvedExchange;
+        assert.deepEqual(resolvedExchange.captured, ['炮'], 'The NPC reply must actually capture the red cannon in this exchange');
+        assert.equal(resolvedExchange.event, 'exchange');
+        assert.equal(resolvedExchange.mood, 'calm');
+        assert.equal(resolvedExchange.expression, 'neutral');
+        assert.equal(resolvedExchange.audioPaused, true);
+        assert.ok(resolvedExchange.caption.length > 5, 'Muted exchanges must still show the combined response');
         await clickText('悔棋');
         await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && document.querySelector('.reaction-bubble')?.dataset.event === 'undo'");
         const afterUndo = await execute(`({
@@ -439,6 +438,31 @@ async function runSmokeTest({ app, window, distPath, url }) {
         assert.equal(afterUndo.audioPaused, true);
         assert.equal(afterUndo.capturedCount, 0);
         assert.equal(afterUndo.characterCards, 0, 'Undoing the exchange must keep the single-opponent match view');
+
+        // Observe real HTMLAudio playback, not just text: this fast recapture
+        // should produce one considered exchange line and no stale sigh/cheer.
+        await clickLabel('打开角色语音');
+        await execute(`(() => {
+          const player = document.querySelector('.character-voice');
+          const audit = { played: [], onPlay: () => audit.played.push({ src: player.currentSrc, time: Date.now(), caption: document.querySelector('.reaction-bubble p').textContent }) };
+          window.__dialogueSmoke = audit;
+          player.addEventListener('play', audit.onPlay);
+        })()`);
+        await moveBetween({ x: 1, y: 7 }, { x: 1, y: 0 });
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '02 步' && document.querySelector('.reaction-bubble')?.dataset.event === 'exchange'");
+        await waitFor("(() => { const player = document.querySelector('.character-voice'); return player.currentSrc.includes('/exchange-') && !player.paused && player.currentTime > 0.1; })()");
+        report.checks.dialoguePlayback = await execute(`(() => {
+          const player = document.querySelector('.character-voice');
+          const audit = window.__dialogueSmoke;
+          player.removeEventListener('play', audit.onPlay);
+          delete window.__dialogueSmoke;
+          return { played: audit.played, finalEvent: document.querySelector('.reaction-bubble').dataset.event, duration: player.duration };
+        })()`);
+        assert.equal(report.checks.dialoguePlayback.played.length, 1, 'A single rapid exchange should play exactly one voice line');
+        assert.ok(report.checks.dialoguePlayback.played.every(item => item.src.includes('/exchange-')), 'An outdated loss or capture reaction was played');
+        await clickLabel('关闭角色语音');
+        await clickText('悔棋');
+        await waitFor("document.querySelector('.move-count')?.textContent.trim() === '00 步' && document.querySelector('.character-voice').paused");
 
         // Exercise the real game state through its public keyboard controls.
         for (const keyName of ['Escape', 'Enter', 'ArrowUp', 'Enter']) await key(keyName);
