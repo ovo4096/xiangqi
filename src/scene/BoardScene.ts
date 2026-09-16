@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { pieceLabel, type Piece } from '../game/engine';
+import { boardCamera } from './camera';
 
 type Point = { x: number; y: number };
 type LastMove = { from: Point; to: Point } | null;
@@ -230,7 +231,9 @@ export class BoardScene {
   private activePointers = new Set<number>();
   private frame = 0;
   private needsRender = true;
+  private settleFrames = 6;
   private disposed = false;
+  private active = true;
   private view: 'perspective' | 'top' = 'perspective';
   private reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -490,28 +493,26 @@ export class BoardScene {
     this.resetView();
   }
 
+  setActive(active: boolean) {
+    if (this.active === active || this.disposed) return;
+    this.active = active;
+    if (active) { this.resize(); this.frame = requestAnimationFrame(this.animate); }
+    else cancelAnimationFrame(this.frame);
+  }
+
   resetView() {
-    const aspect = this.camera.aspect || 1;
-    const halfFov = THREE.MathUtils.degToRad(this.camera.fov / 2);
-    const direction = this.view === 'top'
-      ? new THREE.Vector3(0, 1, .027).normalize()
-      : new THREE.Vector3(.018, .80, .60).normalize();
-    const target = new THREE.Vector3(0, 0, this.view === 'top' ? 0 : .32);
-    const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), direction).normalize();
-    const up = new THREE.Vector3().crossVectors(direction, right).normalize();
-    const tangent = Math.tan(halfFov) * .92;
-    let distance = 0;
-    // Fit the entire physical object, including the near edge and its thickness.
-    // Perspective foreshortening makes a width/height-only fit crop that edge.
-    for (const x of [-5.34, 5.34]) for (const y of [-.47, .55]) for (const z of [-5.84, 5.84]) {
-      const corner = new THREE.Vector3(x, y, z).sub(target);
-      distance = Math.max(distance, corner.dot(direction) + Math.max(
-        Math.abs(corner.dot(right)) / (tangent * aspect),
-        Math.abs(corner.dot(up)) / tangent,
-      ));
-    }
+    // Flush any residual orbit momentum before setting an absolute camera pose.
+    this.controls.enableDamping = false;
+    this.controls.update();
+    const locked = this.view === 'top';
+    this.controls.enabled = !locked;
+    this.controls.enableRotate = !locked;
+    this.controls.enableZoom = !locked;
+    this.controls.minPolarAngle = locked ? 0 : .025;
+    this.controls.enableDamping = !locked;
+    const { target, position, distance } = boardCamera(this.view, this.camera.aspect || 1, this.camera.fov);
     this.controls.target.copy(target);
-    this.camera.position.copy(direction.multiplyScalar(distance)).add(target);
+    this.camera.position.copy(position);
     this.controls.minDistance = Math.max(10, distance * .66);
     this.controls.maxDistance = Math.max(31, distance * 1.55);
     this.controls.update();
@@ -525,6 +526,7 @@ export class BoardScene {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height, false);
+    this.settleFrames = 6;
     this.resetView();
   };
 
@@ -573,13 +575,13 @@ export class BoardScene {
 
   private onPointerMove = (event: PointerEvent) => {
     if (this.pointerDown && Math.hypot(event.clientX - this.pointerDown.x, event.clientY - this.pointerDown.y) > 6) this.pointerDown.moved = true;
-    this.renderer.domElement.style.cursor = this.pointerDown ? 'grabbing' : this.pointAt(event) ? 'pointer' : 'grab';
+    this.renderer.domElement.style.cursor = this.view === 'top' ? this.pointAt(event) ? 'pointer' : 'default' : this.pointerDown ? 'grabbing' : this.pointAt(event) ? 'pointer' : 'grab';
   };
 
   private onContextMenu = (event: Event) => { event.preventDefault(); };
 
   private animate = (now: number) => {
-    if (this.disposed) return;
+    if (this.disposed || !this.active) return;
     this.frame = requestAnimationFrame(this.animate);
     this.controls.update();
     let animating = false;
@@ -600,8 +602,9 @@ export class BoardScene {
         }
       }
     }
-    if (this.needsRender || animating) {
+    if (this.needsRender || animating || this.settleFrames > 0) {
       this.renderer.render(this.scene, this.camera);
+      this.settleFrames = Math.max(0, this.settleFrames - 1);
       this.needsRender = false;
     }
   };
@@ -638,6 +641,9 @@ export class BoardScene {
     this.ownedTextures.forEach(texture => texture.dispose());
     this.environment.dispose();
     this.renderer.dispose();
+    // Release the GPU context when the retained board is finally destroyed;
+    // disposing Three.js resources alone leaves its drawing surface until GC.
+    this.renderer.forceContextLoss();
     canvas.remove();
     this.views.clear();
   }

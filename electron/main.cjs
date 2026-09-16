@@ -72,9 +72,12 @@ function createWindow(targetSession) {
   const icon = path.join(__dirname, '..', 'build', 'icon.png');
   const win = new BrowserWindow({
     title: TITLE, width: 1380, height: 900, minWidth: 960, minHeight: 700,
-    backgroundColor: '#151b18', show: false,
+    backgroundColor: '#f1ecdf', show: false,
     ...(fs.existsSync(icon) ? { icon } : {}),
     webPreferences: {
+      // Deterministic hidden screenshots use Electron's offscreen compositor.
+      // Normal app windows retain the standard interactive rendering path.
+      ...(smokeTest ? { offscreen: true } : {}),
       session: targetSession,
       contextIsolation: true, sandbox: true, nodeIntegration: false,
       nodeIntegrationInWorker: false, nodeIntegrationInSubFrames: false,
@@ -111,7 +114,7 @@ if (!primaryInstance) {
     if (mainWindow) { if (mainWindow.isMinimized()) mainWindow.restore(); mainWindow.show(); mainWindow.focus(); }
   });
   app.whenReady().then(async () => {
-    nativeTheme.themeSource = 'dark';
+    nativeTheme.themeSource = 'light';
     const targetSession = smokeTest ? session.fromPartition('xiangqi-smoke') : session.defaultSession;
     secureSession(targetSession);
     if (!smokeTest) installMenu();

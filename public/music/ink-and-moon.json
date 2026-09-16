@@ -1,0 +1,17 @@
+{
+  "title": "墨月闲庭 · Ink and Moon",
+  "file": "public/music/ink-and-moon.wav",
+  "format": "WAVE PCM signed 16-bit little-endian",
+  "sampleRate": 44100,
+  "channels": 2,
+  "frames": 4233600,
+  "seconds": 96,
+  "bpm": 80,
+  "bytes": 16934444,
+  "peak": 0.46810913,
+  "rms": 0.09999695,
+  "loopSeamStepLeft": 0.00152588,
+  "loopSeamStepRight": 0.00036621,
+  "maximumAdjacentSampleStep": 0.04431152,
+  "sha256": "757b5e73b0144d5f58814f126e4e8054aa9c5e35040633467b849c617684fd3c"
+}

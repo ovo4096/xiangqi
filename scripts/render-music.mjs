@@ -1,5 +1,5 @@
 /**
- * Quiet Pavilion / 松风入弦
+ * Ink and Moon / 墨月闲庭
  * Original composition and offline synthesis for 弈境 · 中国象棋.
  * No samples, recordings, external packages or network access are used.
  * Rebuild from the repository root: node scripts/render-music.mjs
@@ -9,12 +9,12 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const SAMPLE_RATE = 44_100;
-const SECONDS = 80;
+const SECONDS = 96;
 const FRAMES = SAMPLE_RATE * SECONDS;
 const TAU = 2 * Math.PI;
 const left = new Float64Array(FRAMES);
 const right = new Float64Array(FRAMES);
-let seed = 0x5849414e;
+let seed = 0x4d4f4f4e;
 function random() {
   seed = (Math.imul(seed, 1_664_525) + 1_013_904_223) >>> 0;
   return seed / 0x1_0000_0000;
@@ -96,68 +96,44 @@ function flute(event) {
   mix(event, mono);
 }
 
-// Twenty 4/4 bars at 60 BPM, in a D-major pentatonic collection (D E F# A B).
-// Four related five-bar phrases leave breathing space around each cadence.
+// Thirty-two 4/4 bars at 80 BPM. Four eight-bar phrases in a D-minor
+// pentatonic collection (D F G A C). Sparse guqin-like low plucks and an
+// answering bamboo-flute voice leave long rests for the board and characters.
+const beatSeconds = .75;
 const phrases = [
-  [[0.35, 62], [2.05, 64], [3.10, 66], [5.05, 69], [7.45, 66], [9.10, 64], [11.15, 62], [13.30, 59], [15.10, 62], [17.10, 64], [18.25, 62]],
-  [[0.65, 69], [3.10, 66], [5.10, 64], [6.35, 62], [8.20, 64], [10.10, 66], [12.60, 64], [14.10, 59], [16.15, 57], [18.20, 62]],
-  [[0.40, 66], [2.15, 69], [4.65, 71], [6.15, 74], [8.65, 71], [10.20, 69], [12.15, 66], [13.45, 69], [15.65, 64], [18.15, 66]],
-  [[0.55, 69], [3.15, 66], [5.15, 64], [8.10, 62], [11.30, 59], [13.20, 62], [15.35, 64], [17.20, 62]],
+  [[0,62],[3,65],[5,67],[8,69],[11,67],[14,65],[18,62],[22,60],[25,62]],
+  [[1,65],[4,67],[7,69],[11,72],[14,69],[17,67],[21,65],[25,62],[28,60]],
+  [[0,67],[3,69],[6,72],[10,74],[13,72],[16,69],[19,67],[23,65],[27,67]],
+  [[1,69],[5,67],[9,65],[12,62],[17,60],[21,57],[24,60],[27,62]],
 ];
 const events = [];
 phrases.forEach((phrase, phraseIndex) => {
   phrase.forEach(([beat, note], index) => {
-    events.push({
-      at: phraseIndex * 20 + beat,
-      note,
-      amp: 0.34 * (0.90 + random() * 0.18) * (note >= 72 ? 0.80 : 1),
-      decay: index === phrase.length - 1 ? 3.0 : 2.2 + random() * 0.3,
-      pan: -0.12 + random() * 0.08,
-    });
+    events.push({at: (phraseIndex * 32 + beat) * beatSeconds + .14,
+      note, amp: .3 * (.88 + random() * .2), decay: index === phrase.length - 1 ? 3.8 : 2.7,
+      pan: -.18 + random() * .09 });
+    // An occasional quiet octave harmonic, rather than a constant arpeggio.
+    if (index === 2 || index === 6) events.push({at: (phraseIndex * 32 + beat + 1.5) * beatSeconds + .14,
+      note: note + 12, amp: .052, decay: 1.7, pan: .33});
   });
 });
-
-// Open fifths and sparse, lower-register answering figures beneath the melody.
-const roots = [38, 38, 47, 45, 38, 38, 47, 45, 45, 38, 38, 47, 45, 47, 38, 38, 45, 47, 45, 38];
-const accompaniment = [
-  [50, 57, 62], [50, 59, 64], [47, 54, 59], [45, 52, 57], [50, 57, 62],
-];
-for (let bar = 0; bar < 20; bar++) {
-  events.push({ at: bar * 4 + 0.07, note: roots[bar], amp: 0.19, decay: 3.4, pan: 0.12 });
-  const notes = accompaniment[bar % 5];
-  notes.forEach((note, index) => {
-    if (bar % 5 === 4 && index === 2) return;
-    events.push({
-      at: bar * 4 + [0.15, 1.62, 3.06][index] + (random() - 0.5) * 0.055,
-      note,
-      amp: 0.135 * (0.85 + random() * 0.25),
-      decay: 2.7,
-      pan: 0.26 + random() * 0.12,
-    });
-  });
-}
-events.sort((a, b) => a.at - b.at);
-for (const event of events) pluck(event);
-
-for (const [at, note, duration] of [
-  [11.4, 69, 4.8], [26.5, 66, 5.5], [34.2, 64, 4.5],
-  [46.4, 69, 5.8], [54.4, 66, 4.8], [65.0, 64, 5.2], [73.4, 62, 5.6],
-]) flute({ at, note, duration, amp: 0.035, pan: -0.38 });
-
-// Barely audible, slowly changing open-fifth bed. Oscillators and all amplitude
-// modulators make an integer number of cycles in 80 seconds, so they loop.
-for (const [note, amp, pan, cycles] of [[50, 0.010, -0.4, 2], [57, 0.009, 0.4, 3], [64, 0.005, -0.2, 1]]) {
-  const frequency = Math.round(hz(note) * SECONDS) / SECONDS;
-  const [l, r] = panGains(pan);
-  const phase = random() * TAU;
-  for (let i = 0; i < FRAMES; i++) {
-    const t = i / SAMPLE_RATE;
-    const value = Math.sin(TAU * frequency * t + phase) * amp
-      * (0.70 + 0.30 * Math.sin(TAU * cycles * t / SECONDS + phase));
-    left[i] += value * l;
-    right[i] += value * r;
+const chords = [[38,50,57],[41,53,60],[43,55,62],[45,57,64],[38,50,57],[36,48,55],[43,55,62],[38,50,57]];
+for (let bar = 0; bar < 32; bar++) {
+  const notes = chords[bar % 8];
+  events.push({at: bar * 3 + .03, note: notes[0], amp: .19, decay: 3.8, pan: .05});
+  if (bar % 8 !== 7) {
+    events.push({at: bar * 3 + .11, note: notes[1], amp: .11, decay: 3.0, pan: .2});
+    events.push({at: bar * 3 + 1.64, note: notes[2], amp: .075, decay: 2.5, pan: .31});
   }
 }
+events.sort((a,b) => a.at - b.at);
+for (const event of events) pluck(event);
+for (const [at,note,duration] of [
+  [5.0,69,3.9],[10.1,67,3.0],[17.2,65,4.7],
+  [28.7,72,4.2],[34.2,69,3.2],[40.1,67,4.3],
+  [52.0,74,4.1],[58.1,72,3.6],[64.2,69,5.1],
+  [77.0,67,4.6],[83.2,65,3.2],[88.1,62,5.1],
+]) flute({at,note,duration,amp:.050,pan:-.34});
 
 // Dark, diffuse stereo room: circular taps preserve the decay at the seam.
 const dryLeft = left.slice();
@@ -244,14 +220,14 @@ const seam = [0, 1].map((channel) => Math.abs(
   wav.readInt16LE(44 + channel * 2) - wav.readInt16LE(44 + (FRAMES - 1) * 4 + channel * 2),
 ) / 32768);
 const stats = {
-  title: '松风入弦 · Quiet Pavilion',
-  file: 'public/music/quiet-pavilion.wav',
+  title: '墨月闲庭 · Ink and Moon',
+  file: 'public/music/ink-and-moon.wav',
   format: 'WAVE PCM signed 16-bit little-endian',
   sampleRate: SAMPLE_RATE,
   channels: 2,
   frames: FRAMES,
   seconds: SECONDS,
-  bpm: 60,
+  bpm: 80,
   bytes: wav.length,
   peak: Number(encodedPeak.toFixed(8)),
   rms: Number(Math.sqrt(encodedSquares / (FRAMES * 2)).toFixed(8)),
@@ -263,6 +239,7 @@ const stats = {
 if (stats.peak > 0.8 || stats.rms < 0.08 || stats.rms > 0.14) throw new Error(`Unexpected audio levels: ${JSON.stringify(stats)}`);
 const outputDirectory = new URL('../public/music/', import.meta.url);
 mkdirSync(outputDirectory, { recursive: true });
-writeFileSync(new URL('quiet-pavilion.wav', outputDirectory), wav);
+writeFileSync(new URL('ink-and-moon.wav', outputDirectory), wav);
+writeFileSync(new URL('ink-and-moon.json', outputDirectory), JSON.stringify(stats, null, 2) + '\n');
 console.log(JSON.stringify(stats, null, 2));
-console.log(`Rendered ${fileURLToPath(new URL('quiet-pavilion.wav', outputDirectory))}`);
+console.log(`Rendered ${fileURLToPath(new URL('ink-and-moon.wav', outputDirectory))}`);
